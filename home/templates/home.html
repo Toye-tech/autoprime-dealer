@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoPrime Motors | Premium Cars in Lagos</title>
+<meta name="description" content="Nigeria's #1 premium car dealer. New & pre-owned luxury vehicles. Best prices, nationwide delivery. Lagos.">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────── */
+:root{
+  --black:#050506;
+  --deep:#0a0a0c;
+  --card:#0f0f12;
+  --amber:#f5a623;
+  --amber2:#e8880a;
+  --red:#e63030;
+  --white:#f4f2ee;
+  --grey:#6b6b78;
+  --border:rgba(245,166,35,0.14);
+  --shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+
+/* ─── CURSOR ──────────────────────────────────────────────── */
+.cur{width:10px;height:10px;background:var(--amber);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference}
+.cur-ring{width:36px;height:36px;border:1px solid rgba(245,166,35,.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%)}
+
+/* ─── TICKER ─────────────────────────────────────────────── */
+.ticker{background:var(--amber);color:var(--black);overflow:hidden;height:34px;display:flex;align-items:center}
+.ticker-track{display:flex;animation:tick 30s linear infinite;white-space:nowrap}
+.ticker-track:hover{animation-play-state:paused}
+.ticker-item{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:0 2.5rem}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ─── NAV ────────────────────────────────────────────────── */
+nav{position:fixed;top:34px;left:0;right:0;z-index:100;padding:0 5%;height:68px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid transparent;transition:all .4s}
+nav.scrolled{background:rgba(5,5,6,.96);backdrop-filter:blur(24px);border-color:var(--border);top:0}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--white)}
+.logo-mark{width:42px;height:42px;background:var(--amber);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--black)}
+.logo-text h1{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;letter-spacing:3px;text-transform:uppercase;line-height:1}
+.logo-text p{font-size:9px;letter-spacing:5px;color:var(--amber);text-transform:uppercase;margin-top:1px}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{color:rgba(244,242,238,.55);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--amber);transition:width .3s}
+.nav-links a:hover{color:var(--amber)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{display:flex;align-items:center;gap:8px;background:var(--amber);color:var(--black);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:10px 22px;border-radius:3px;text-decoration:none;transition:all .2s}
+.nav-cta:hover{background:#fff}
+.hamburger{display:none;background:none;border:1px solid var(--border);color:var(--white);width:42px;height:42px;border-radius:6px;cursor:pointer;font-size:16px}
+.mob-menu{display:none;position:fixed;inset:0;background:rgba(5,5,6,.98);z-index:200;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mob-menu.open{display:flex}
+.mob-menu a{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;letter-spacing:4px;text-transform:uppercase;color:var(--white);text-decoration:none;transition:color .2s}
+.mob-menu a:hover{color:var(--amber)}
+.mob-close{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:var(--grey);font-size:28px;cursor:pointer}
+
+/* ─── HERO ──────────────────────────────────────────────── */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:102px}
+.hero-video-bg{position:absolute;inset:0;background:linear-gradient(125deg,rgba(5,5,6,.97) 0%,rgba(10,10,12,.85) 40%,rgba(5,5,6,.7) 100%),url('https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1800&q=80') center/cover no-repeat;background-attachment:fixed}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(245,166,35,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
+.hero-content{position:relative;z-index:2;max-width:1400px;margin:0 auto;padding:0 5%;display:grid;grid-template-columns:1fr 360px;gap:4rem;align-items:center;width:100%}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:rgba(245,166,35,.06);padding:8px 18px;border-radius:2px;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:2rem;animation:fadeUp .8s ease both}
+.live-dot{width:6px;height:6px;background:var(--red);border-radius:50%;animation:blink 1.2s ease-in-out infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(80px,11vw,160px);line-height:.88;font-weight:900;text-transform:uppercase;letter-spacing:-2px;margin-bottom:2rem;animation:fadeUp .8s .1s ease both}
+.hero-title .amber{color:var(--amber)}
+.hero-title .outline{-webkit-text-stroke:2px var(--white);color:transparent}
+.hero-title .outline-a{-webkit-text-stroke:2px var(--amber);color:transparent}
+.hero-sub{font-size:16px;line-height:1.8;color:rgba(244,242,238,.5);max-width:480px;margin-bottom:2.5rem;animation:fadeUp .8s .2s ease both}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .8s .3s ease both}
+.btn-amber{background:var(--amber);color:var(--black);font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:16px 32px;border-radius:3px;text-decoration:none;border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-amber:hover{background:#fff;transform:translateY(-2px);box-shadow:0 12px 30px rgba(245,166,35,.3)}
+.btn-outline{border:1px solid rgba(244,242,238,.25);color:var(--white);font-weight:500;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:16px 32px;border-radius:3px;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-outline:hover{border-color:var(--amber);color:var(--amber)}
+
+/* HERO PANEL */
+.hero-panel{background:rgba(15,15,18,.9);border:1px solid var(--border);border-radius:10px;overflow:hidden;animation:fadeUp .8s .4s ease both;backdrop-filter:blur(10px)}
+.hp-header{background:linear-gradient(135deg,rgba(245,166,35,.12),rgba(245,166,35,.03));padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.hp-header h3{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--amber)}
+.hp-body{padding:20px}
+.hp-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(245,166,35,.06)}
+.hp-row:last-child{border:none}
+.hp-label{font-size:11px;color:var(--grey);text-transform:uppercase;letter-spacing:1px}
+.hp-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--amber)}
+.hp-footer{background:var(--amber);padding:14px 22px;display:flex;align-items:center;justify-content:space-between}
+.hp-footer span{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--black)}
+.speedlines{display:flex;gap:3px;align-items:center}
+.sl{height:3px;background:var(--black);border-radius:2px;animation:speedPulse 1s ease-in-out infinite}
+.sl:nth-child(1){width:8px;animation-delay:0s}
+.sl:nth-child(2){width:16px;animation-delay:.1s}
+.sl:nth-child(3){width:24px;animation-delay:.2s}
+.sl:nth-child(4){width:12px;animation-delay:.15s}
+.sl:nth-child(5){width:20px;animation-delay:.05s}
+@keyframes speedPulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* ─── STATS ──────────────────────────────────────────────── */
+.stats-bar{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--deep)}
+.stats-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);padding:0 5%}
+.stat-item{padding:2.5rem 2rem;border-right:1px solid var(--border);transition:background .3s}
+.stat-item:last-child{border:none}
+.stat-item:hover{background:rgba(245,166,35,.03)}
+.stat-num{font-family:'Barlow Condensed',sans-serif;font-size:58px;font-weight:900;color:var(--amber);line-height:1;letter-spacing:-1px}
+.stat-label{font-size:11px;color:var(--grey);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
+
+/* ─── SECTION LABEL ─────────────────────────────────────── */
+.sec-label{display:inline-flex;align-items:center;gap:10px;font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--amber);margin-bottom:1rem}
+.sec-label::before{content:'';width:28px;height:1px;background:var(--amber)}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(48px,6vw,80px);font-weight:900;text-transform:uppercase;line-height:.92;letter-spacing:-1px}
+.sec-title .amber{color:var(--amber)}
+.sec-title .outline{-webkit-text-stroke:2px var(--white);color:transparent}
+
+/* ─── FILTER BAR ─────────────────────────────────────────── */
+.filter-bar{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:3rem}
+.filter-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 22px;border:1px solid var(--border);border-radius:3px;background:none;color:var(--grey);cursor:pointer;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{background:var(--amber);color:var(--black);border-color:var(--amber)}
+
+/* ─── INVENTORY ──────────────────────────────────────────── */
+.inventory-section{padding:7rem 5%;background:var(--deep)}
+.inventory-inner{max-width:1400px;margin:0 auto}
+.inv-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem;gap:2rem}
+.cars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+
+.car-card{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:all .3s;position:relative;display:flex;flex-direction:column}
+.car-card:hover{transform:translateY(-8px);border-color:rgba(245,166,35,.3);box-shadow:var(--shadow)}
+.car-img-wrap{position:relative;height:220px;overflow:hidden;background:#0a0a0c}
+.car-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.car-card:hover .car-img-wrap img{transform:scale(1.06)}
+.car-badge{position:absolute;top:14px;left:14px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:2px}
+.badge-new{background:var(--amber);color:var(--black)}
+.badge-hot{background:var(--red);color:#fff}
+.badge-sold{background:var(--grey);color:#fff}
+.badge-deal{background:#16a34a;color:#fff}
+.car-wa-quick{position:absolute;top:14px;right:14px;background:#25D366;color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;opacity:0;transform:scale(.8);transition:all .2s}
+.car-card:hover .car-wa-quick{opacity:1;transform:scale(1)}
+.car-body{padding:1.5rem;flex:1;display:flex;flex-direction:column}
+.car-brand{font-size:10px;color:var(--amber);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:4px}
+.car-name{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:1px;line-height:1;margin-bottom:6px}
+.car-specs{display:flex;gap:1rem;font-size:12px;color:var(--grey);margin-bottom:1rem;flex-wrap:wrap}
+.car-spec{display:flex;align-items:center;gap:4px}
+.car-spec i{color:var(--amber);font-size:10px}
+.car-price{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--amber);letter-spacing:-1px;margin-bottom:1rem}
+.car-price small{font-size:14px;color:var(--grey);font-family:'Outfit',sans-serif;font-weight:300}
+.car-actions{display:flex;gap:.75rem;margin-top:auto}
+.car-btn-primary{flex:1;background:var(--amber);color:var(--black);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:12px;border:none;border-radius:3px;cursor:pointer;transition:all .2s;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px}
+.car-btn-primary:hover{background:#fff}
+.car-btn-wa{background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);color:#25D366;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:12px 16px;border-radius:3px;cursor:pointer;transition:all .2s;text-decoration:none;display:flex;align-items:center;gap:6px}
+.car-btn-wa:hover{background:#25D366;color:#fff;border-color:#25D366}
+
+/* FEATURED LARGE CARD */
+.car-card.featured{grid-column:span 2}
+.car-card.featured .car-img-wrap{height:300px}
+.car-card.featured .car-name{font-size:36px}
+.car-card.featured .car-price{font-size:42px}
+
+/* ─── WHY US ─────────────────────────────────────────────── */
+.whyus-section{padding:7rem 5%;background:var(--black);border-top:1px solid var(--border)}
+.whyus-inner{max-width:1400px;margin:0 auto}
+.whyus-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.whyus-left h2{margin-bottom:1.5rem}
+.whyus-left p{font-size:15px;line-height:1.9;color:rgba(244,242,238,.5);margin-bottom:2.5rem}
+.whyus-features{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.feat-item{border:1px solid var(--border);border-radius:6px;padding:1.5rem;background:var(--card);transition:all .3s;position:relative;overflow:hidden}
+.feat-item::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.feat-item:hover{border-color:rgba(245,166,35,.3);transform:translateY(-3px)}
+.feat-item:hover::before{transform:scaleX(1)}
+.feat-icon{font-size:28px;margin-bottom:12px}
+.feat-item h4{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.feat-item p{font-size:12px;color:var(--grey);line-height:1.7}
+.whyus-right{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.metric-box{background:var(--card);padding:2.5rem 2rem;transition:background .3s}
+.metric-box:hover{background:rgba(245,166,35,.04)}
+.metric-num{font-family:'Barlow Condensed',sans-serif;font-size:56px;font-weight:900;color:var(--amber);line-height:1;letter-spacing:-1px}
+.metric-lbl{font-size:11px;color:var(--grey);letter-spacing:2px;text-transform:uppercase;margin-top:6px}
+
+/* ─── TESTIMONIALS ──────────────────────────────────────── */
+.testi-section{padding:7rem 5%;background:var(--deep);border-top:1px solid var(--border)}
+.testi-inner{max-width:1400px;margin:0 auto}
+.testi-header{margin-bottom:4rem}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.testi-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:2.5rem;transition:all .3s;display:flex;flex-direction:column}
+.testi-card:hover{border-color:rgba(245,166,35,.3);transform:translateY(-4px)}
+.testi-stars{display:flex;gap:3px;color:var(--amber);font-size:13px;margin-bottom:1.5rem}
+.testi-text{font-size:14px;line-height:1.8;color:rgba(244,242,238,.7);flex:1;margin-bottom:2rem}
+.testi-text::before{content:'"';font-family:'Barlow Condensed',sans-serif;font-size:60px;color:var(--amber);opacity:.2;display:block;line-height:.9;margin-bottom:.5rem}
+.testi-author{display:flex;align-items:center;gap:12px;padding-top:1.5rem;border-top:1px solid var(--border)}
+.testi-ava{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--amber),var(--amber2));display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--black);flex-shrink:0}
+.testi-name{font-size:13px;font-weight:600}
+.testi-loc{font-size:11px;color:var(--grey);margin-top:1px}
+
+/* ─── BRANDS ─────────────────────────────────────────────── */
+.brands-section{padding:4rem 5%;background:var(--black);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.brands-inner{max-width:1400px;margin:0 auto}
+.brands-label{text-align:center;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--grey);margin-bottom:2rem}
+.brands-track{display:flex;gap:3rem;align-items:center;flex-wrap:wrap;justify-content:center}
+.brand-item{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:rgba(244,242,238,.15);transition:color .3s;cursor:default}
+.brand-item:hover{color:var(--amber)}
+
+/* ─── CONTACT ────────────────────────────────────────────── */
+.contact-section{padding:7rem 5%;background:var(--deep);border-top:1px solid var(--border)}
+.contact-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1.3fr;gap:6rem;align-items:start}
+.contact-left h2{margin-bottom:1.5rem}
+.contact-left p{font-size:15px;line-height:1.9;color:rgba(244,242,238,.5);margin-bottom:3rem}
+.contact-items{display:flex;flex-direction:column;gap:1.25rem;margin-bottom:3rem}
+.contact-item{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--white);transition:color .2s}
+.contact-item:hover{color:var(--amber)}
+.c-icon{width:44px;height:44px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:16px;flex-shrink:0;transition:all .2s}
+.contact-item:hover .c-icon{background:rgba(245,166,35,.1);border-color:var(--amber)}
+.c-label{font-size:10px;color:var(--grey);letter-spacing:2px;text-transform:uppercase;margin-bottom:2px}
+.c-val{font-size:14px;font-weight:500}
+.wa-main{display:flex;align-items:center;justify-content:center;gap:12px;background:#25D366;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:18px 32px;border-radius:4px;text-decoration:none;transition:all .2s;width:100%}
+.wa-main:hover{background:#1ebe5c;transform:translateY(-2px);box-shadow:0 12px 30px rgba(37,211,102,.3)}
+.wa-main i{font-size:22px}
+
+/* CONTACT FORM */
+.contact-form{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:3rem}
+.contact-form h3{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:2rem}
+.f-group{margin-bottom:1.25rem}
+.f-label{display:block;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--grey);margin-bottom:8px}
+.f-input{width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:5px;padding:14px 16px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--white);outline:none;transition:border-color .2s,background .2s}
+.f-input:focus{border-color:var(--amber);background:rgba(245,166,35,.03)}
+.f-input::placeholder{color:rgba(255,255,255,.18)}
+.f-input option{background:#1a1a20;color:var(--white)}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.f-submit{width:100%;background:var(--amber);color:var(--black);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;letter-spacing:3px;text-transform:uppercase;border:none;padding:18px;border-radius:4px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:1.5rem}
+.f-submit:hover{background:#fff;transform:translateY(-2px)}
+.f-err{font-size:11px;color:var(--red);margin-top:4px;display:none}
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5% 2.5rem}
+.foot-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.foot-brand p{font-size:13px;color:var(--grey);line-height:1.8;margin:1rem 0 1.5rem;max-width:280px}
+.foot-socials{display:flex;gap:10px}
+.soc-btn{width:36px;height:36px;border:1px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;color:var(--grey);font-size:14px;text-decoration:none;transition:all .2s}
+.soc-btn:hover{background:rgba(245,166,35,.1);color:var(--amber);border-color:rgba(245,166,35,.3)}
+.foot-col h4{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--white);margin-bottom:1.5rem}
+.foot-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.foot-links a{font-size:13px;color:var(--grey);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--amber)}
+.foot-bottom{max-width:1400px;margin:2rem auto 0;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:rgba(107,107,120,.5);flex-wrap:wrap;gap:1rem}
+
+/* ─── FLOATS ─────────────────────────────────────────────── */
+.wa-float{position:fixed;bottom:2.5rem;right:2.5rem;z-index:89;width:58px;height:58px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;text-decoration:none;box-shadow:0 8px 32px rgba(37,211,102,.4);transition:all .2s}
+.wa-float:hover{transform:scale(1.1)}
+.wa-float::before{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(37,211,102,.3);animation:waRing 2s ease-out infinite}
+@keyframes waRing{0%{transform:scale(1);opacity:1}100%{transform:scale(1.5);opacity:0}}
+#btt{position:fixed;bottom:2.5rem;left:2.5rem;width:44px;height:44px;background:var(--card);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:14px;cursor:pointer;opacity:0;pointer-events:none;transition:all .3s;z-index:88;box-shadow:var(--shadow)}
+#btt.vis{opacity:1;pointer-events:all}
+#btt:hover{background:var(--amber);color:var(--black);border-color:var(--amber)}
+#toast{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%) translateY(16px);background:var(--card);border:1px solid var(--border);color:var(--white);padding:12px 24px;border-radius:3px;font-size:13px;font-weight:500;opacity:0;pointer-events:none;transition:all .4s;z-index:9999;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ─── ANIMATIONS ─────────────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media(max-width:1200px){.cars-grid{grid-template-columns:1fr 1fr}.car-card.featured{grid-column:span 1}.car-card.featured .car-img-wrap{height:220px}}
+@media(max-width:1024px){.hero-content{grid-template-columns:1fr}.hero-panel{display:none}.whyus-grid{grid-template-columns:1fr;gap:3rem}.contact-inner{grid-template-columns:1fr;gap:3rem}.foot-inner{grid-template-columns:1fr 1fr;gap:2.5rem}}
+@media(max-width:768px){.nav-links,.nav-cta{display:none}.hamburger{display:flex;align-items:center;justify-content:center}.stats-inner{grid-template-columns:repeat(2,1fr)}.cars-grid{grid-template-columns:1fr}.testi-grid{grid-template-columns:1fr}.whyus-features{grid-template-columns:1fr}.whyus-right{grid-template-columns:1fr}.inv-header{flex-direction:column;align-items:flex-start}.f-row{grid-template-columns:1fr}.foot-inner{grid-template-columns:1fr}.foot-bottom{flex-direction:column;text-align:center}}
+@media(max-width:480px){.stat-num{font-size:40px}.hero-btns{flex-direction:column}.btn-amber,.btn-outline{text-align:center;justify-content:center}.contact-form{padding:1.5rem}body{cursor:auto}.cur,.cur-ring{display:none}}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">🔥 New arrivals: Mercedes G-Wagon 2024 just landed</span>
+    <span class="ticker-item">◆ Best price guarantee — we beat any competitor</span>
+    <span class="ticker-item">◆ Nationwide delivery across Nigeria</span>
+    <span class="ticker-item">◆ Flexible payment & bank finance available</span>
+    <span class="ticker-item">◆ 100% verified vehicles — full inspection report</span>
+    <span class="ticker-item">◆ Call us: 0909 090 4121 | 0805 321 6651</span>
+    <span class="ticker-item">🔥 New arrivals: Mercedes G-Wagon 2024 just landed</span>
+    <span class="ticker-item">◆ Best price guarantee — we beat any competitor</span>
+    <span class="ticker-item">◆ Nationwide delivery across Nigeria</span>
+    <span class="ticker-item">◆ Flexible payment & bank finance available</span>
+    <span class="ticker-item">◆ 100% verified vehicles — full inspection report</span>
+    <span class="ticker-item">◆ Call us: 0909 090 4121 | 0805 321 6651</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">A</div>
+    <div class="logo-text"><h1>AutoPrime</h1><p>Motors · Lagos</p></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#inventory">Inventory</a></li>
+    <li><a href="#whyus">Why Us</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/2349090904121?text=Hello%20AutoPrime%20Motors%2C%20I%27m%20interested%20in%20a%20car." target="_blank" rel="noopener" class="nav-cta">
+    <i class="fab fa-whatsapp"></i> WhatsApp Us
+  </a>
+  <button class="hamburger" id="ham"><i class="fas fa-bars"></i></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" id="mobClose"><i class="fas fa-times"></i></button>
+  <a href="#inventory" onclick="closeMob()">Inventory</a>
+  <a href="#whyus" onclick="closeMob()">Why Us</a>
+  <a href="#testimonials" onclick="closeMob()">Reviews</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+  <a href="https://wa.me/2349090904121" target="_blank" style="color:var(--amber)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-video-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge"><span class="live-dot"></span>Nigeria's #1 Premium Car Dealer · Lagos</div>
+      <h1 class="hero-title">
+        DRIVE<br>
+        YOUR <span class="amber">DREAM.</span><br>
+        <span class="outline">OWN</span><br>
+        <span class="outline-a">YOUR</span> FUTURE.
+      </h1>
+      <p class="hero-sub">Premium new & pre-owned vehicles. Unbeatable prices. Trusted by thousands of Lagos drivers. Nationwide delivery guaranteed.</p>
+      <div class="hero-btns">
+        <a href="#inventory" class="btn-amber"><i class="fas fa-car"></i> Browse Inventory</a>
+        <a href="https://wa.me/2349090904121?text=Hello%2C%20I%20need%20an%20instant%20quote%20for%20a%20car." target="_blank" rel="noopener" class="btn-outline"><i class="fab fa-whatsapp"></i> Get Instant Quote</a>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="hp-header"><h3>Live Inventory</h3><span style="font-size:10px;color:var(--grey);letter-spacing:2px;text-transform:uppercase">Updated Daily</span></div>
+      <div class="hp-body">
+        <div class="hp-row"><span class="hp-label">Cars in Stock</span><span class="hp-val">47+</span></div>
+        <div class="hp-row"><span class="hp-label">Starting From</span><span class="hp-val">₦18M</span></div>
+        <div class="hp-row"><span class="hp-label">Sold This Month</span><span class="hp-val">23</span></div>
+        <div class="hp-row"><span class="hp-label">Avg. Delivery Time</span><span class="hp-val">3 Days</span></div>
+      </div>
+      <div class="hp-footer">
+        <span>All Verified & Cleared</span>
+        <div class="speedlines"><div class="sl"></div><div class="sl"></div><div class="sl"></div><div class="sl"></div><div class="sl"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item reveal"><div class="stat-num">2,000+</div><div class="stat-label">Happy Customers</div></div>
+    <div class="stat-item reveal"><div class="stat-num">47+</div><div class="stat-label">Cars In Stock</div></div>
+    <div class="stat-item reveal"><div class="stat-num">8 Yrs</div><div class="stat-label">In Business</div></div>
+    <div class="stat-item reveal"><div class="stat-num">4.9★</div><div class="stat-label">Google Rating</div></div>
+  </div>
+</div>
+
+<!-- BRANDS -->
+<div class="brands-section">
+  <div class="brands-inner">
+    <div class="brands-label">Brands We Deal In</div>
+    <div class="brands-track">
+      <span class="brand-item">Mercedes-Benz</span>
+      <span class="brand-item">BMW</span>
+      <span class="brand-item">Lexus</span>
+      <span class="brand-item">Toyota</span>
+      <span class="brand-item">Range Rover</span>
+      <span class="brand-item">Porsche</span>
+      <span class="brand-item">Audi</span>
+      <span class="brand-item">Bentley</span>
+      <span class="brand-item">Ferrari</span>
+      <span class="brand-item">Honda</span>
+    </div>
+  </div>
+</div>
+
+<!-- INVENTORY -->
+<section id="inventory" class="inventory-section">
+  <div class="inventory-inner">
+    <div class="inv-header reveal">
+      <div><div class="sec-label">Current Stock</div><h2 class="sec-title">FEATURED <span class="amber">VEHICLES</span></h2></div>
+      <p style="color:var(--grey);font-size:14px;line-height:1.8;max-width:340px">All vehicles are 100% verified, duty-cleared, and ready for immediate delivery across Nigeria.</p>
+    </div>
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" onclick="filterCars('all',this)">All Vehicles</button>
+      <button class="filter-btn" onclick="filterCars('suv',this)">SUVs</button>
+      <button class="filter-btn" onclick="filterCars('sedan',this)">Sedans</button>
+      <button class="filter-btn" onclick="filterCars('luxury',this)">Luxury</button>
+      <button class="filter-btn" onclick="filterCars('sport',this)">Sports</button>
+    </div>
+    <div class="cars-grid" id="carsGrid">
+
+      <!-- FEATURED -->
+      <div class="car-card featured reveal" data-cat="luxury suv">
+        <div class="car-img-wrap">
+          <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=900&q=80" alt="Mercedes G-Wagon">
+          <span class="car-badge badge-hot">🔥 Hot</span>
+          <a href="https://wa.me/2349090904121?text=Hello%2C%20I%27m%20interested%20in%20the%20Mercedes%20G-Wagon%202024%20at%20%E2%82%A6195M" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="car-body">
+          <div class="car-brand">Mercedes-Benz</div>
+          <div class="car-name">G-Wagon AMG 2024</div>
+          <div class="car-specs">
+            <span class="car-spec"><i class="fas fa-calendar"></i> 2024</span>
+            <span class="car-spec"><i class="fas fa-road"></i> 6,200 km</span>
+            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
+            <span class="car-spec"><i class="fas fa-cog"></i> Automatic</span>
+          </div>
+          <div class="car-price">₦195,000,000 <small>/ Negotiable</small></div>
+          <div class="car-actions">
+            <a href="#contact" class="car-btn-primary"><i class="fas fa-phone"></i> Enquire Now</a>
+            <a href="https://wa.me/2349090904121?text=Hello%20AutoPrime%2C%20I%20want%20the%20G-Wagon%202024" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAR 2 -->
+      <div class="car-card reveal" data-cat="sedan luxury">
+        <div class="car-img-wrap">
+          <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=700&q=80" alt="BMW 7 Series">
+          <span class="car-badge badge-new">New</span>
+          <a href="https://wa.me/2349090904121?text=I%27m%20interested%20in%20the%20BMW%207%20Series" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="car-body">
+          <div class="car-brand">BMW</div>
+          <div class="car-name">7 Series 760i 2024</div>
+          <div class="car-specs">
+            <span class="car-spec"><i class="fas fa-calendar"></i> 2024</span>
+            <span class="car-spec"><i class="fas fa-road"></i> 3,100 km</span>
+            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
+          </div>
+          <div class="car-price">₦95,000,000</div>
+          <div class="car-actions">
+            <a href="#contact" class="car-btn-primary"><i class="fas fa-phone"></i> Enquire</a>
+            <a href="https://wa.me/2349090904121?text=I%20want%20the%20BMW%207%20Series%202024" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAR 3 -->
+      <div class="car-card reveal" data-cat="suv luxury">
+        <div class="car-img-wrap">
+          <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=700&q=80" alt="Range Rover">
+          <span class="car-badge badge-deal">Best Deal</span>
+          <a href="https://wa.me/2349090904121?text=Interested%20in%20Range%20Rover%20Sport" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="car-body">
+          <div class="car-brand">Land Rover</div>
+          <div class="car-name">Range Rover Sport 2023</div>
+          <div class="car-specs">
+            <span class="car-spec"><i class="fas fa-calendar"></i> 2023</span>
+            <span class="car-spec"><i class="fas fa-road"></i> 18,000 km</span>
+            <span class="car-spec"><i class="fas fa-gas-pump"></i> Diesel</span>
+          </div>
+          <div class="car-price">₦88,500,000</div>
+          <div class="car-actions">
+            <a href="#contact" class="car-btn-primary"><i class="fas fa-phone"></i> Enquire</a>
+            <a href="https://wa.me/2349090904121?text=I%20want%20the%20Range%20Rover%20Sport%202023" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAR 4 -->
+      <div class="car-card reveal" data-cat="suv">
+        <div class="car-img-wrap">
+          <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=700&q=80" alt="Lexus LX">
+          <span class="car-badge badge-new">New</span>
+          <a href="https://wa.me/2349090904121?text=Interested%20in%20the%20Lexus%20LX%20600" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="car-body">
+          <div class="car-brand">Lexus</div>
+          <div class="car-name">LX 600 F-Sport 2024</div>
+          <div class="car-specs">
+            <span class="car-spec"><i class="fas fa-calendar"></i> 2024</span>
+            <span class="car-spec"><i class="fas fa-road"></i> 5,400 km</span>
+            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
+          </div>
+          <div class="car-price">₦120,000,000</div>
+          <div class="car-actions">
+            <a href="#contact" class="car-btn-primary"><i class="fas fa-phone"></i> Enquire</a>
+            <a href="https://wa.me/2349090904121?text=I%20want%20the%20Lexus%20LX600" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAR 5 -->
+      <div class="car-card reveal" data-cat="sport luxury">
+        <div class="car-img-wrap">
+          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=700&q=80" alt="Porsche">
+          <span class="car-badge badge-hot">🔥 Hot</span>
+          <a href="https://wa.me/2349090904121?text=Interested%20in%20Porsche%20Cayenne" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="car-body">
+          <div class="car-brand">Porsche</div>
+          <div class="car-name">Cayenne Turbo 2023</div>
+          <div class="car-specs">
+            <span class="car-spec"><i class="fas fa-calendar"></i> 2023</span>
+            <span class="car-spec"><i class="fas fa-road"></i> 9,800 km</span>
+            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
+          </div>
+          <div class="car-price">₦145,000,000</div>
+          <div class="car-actions">
+            <a href="#contact" class="car-btn-primary"><i class="fas fa-phone"></i> Enquire</a>
+            <a href="https://wa.me/2349090904121?text=I%20want%20the%20Porsche%20Cayenne%20Turbo%202023" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAR 6 -->
+      <div class="car-card reveal" data-cat="sedan">
+        <div class="car-img-wrap">
+          <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=700&q=80" alt="Toyota Camry">
+          <span class="car-badge badge-deal">Great Value</span>
+          <a href="https://wa.me/2349090904121?text=Interested%20in%20Toyota%20Camry%20XSE" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="car-body">
+          <div class="car-brand">Toyota</div>
+          <div class="car-name">Camry XSE V6 2024</div>
+          <div class="car-specs">
+            <span class="car-spec"><i class="fas fa-calendar"></i> 2024</span>
+            <span class="car-spec"><i class="fas fa-road"></i> 2,300 km</span>
+            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
+          </div>
+          <div class="car-price">₦32,000,000</div>
+          <div class="car-actions">
+            <a href="#contact" class="car-btn-primary"><i class="fas fa-phone"></i> Enquire</a>
+            <a href="https://wa.me/2349090904121?text=I%20want%20the%20Toyota%20Camry%20XSE%202024" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAR 7 -->
+      <div class="car-card reveal" data-cat="suv">
+        <div class="car-img-wrap">
+          <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=700&q=80" alt="Toyota Highlander">
+          <span class="car-badge badge-new">New</span>
+          <a href="https://wa.me/2349090904121?text=Interested%20in%20Toyota%20Highlander%20Platinum" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="car-body">
+          <div class="car-brand">Toyota</div>
+          <div class="car-name">Highlander Platinum 2024</div>
+          <div class="car-specs">
+            <span class="car-spec"><i class="fas fa-calendar"></i> 2024</span>
+            <span class="car-spec"><i class="fas fa-road"></i> 1,800 km</span>
+            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
+          </div>
+          <div class="car-price">₦48,500,000</div>
+          <div class="car-actions">
+            <a href="#contact" class="car-btn-primary"><i class="fas fa-phone"></i> Enquire</a>
+            <a href="https://wa.me/2349090904121?text=I%20want%20the%20Toyota%20Highlander%20Platinum%202024" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAR 8 -->
+      <div class="car-card reveal" data-cat="sedan luxury">
+        <div class="car-img-wrap">
+          <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=700&q=80" alt="Mercedes E-Class">
+          <span class="car-badge badge-deal">Best Deal</span>
+          <a href="https://wa.me/2349090904121?text=Interested%20in%20Mercedes%20E-Class%202023" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="car-body">
+          <div class="car-brand">Mercedes-Benz</div>
+          <div class="car-name">E-Class E350 2023</div>
+          <div class="car-specs">
+            <span class="car-spec"><i class="fas fa-calendar"></i> 2023</span>
+            <span class="car-spec"><i class="fas fa-road"></i> 14,200 km</span>
+            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
+          </div>
+          <div class="car-price">₦62,000,000</div>
+          <div class="car-actions">
+            <a href="#contact" class="car-btn-primary"><i class="fas fa-phone"></i> Enquire</a>
+            <a href="https://wa.me/2349090904121?text=I%20want%20the%20Mercedes%20E-Class%20E350%202023" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAR 9 -->
+      <div class="car-card reveal" data-cat="sport">
+        <div class="car-img-wrap">
+          <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=700&q=80" alt="BMW M5">
+          <span class="car-badge badge-hot">🔥 Rare</span>
+          <a href="https://wa.me/2349090904121?text=Interested%20in%20the%20BMW%20M5%20Competition" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="car-body">
+          <div class="car-brand">BMW</div>
+          <div class="car-name">M5 Competition 2023</div>
+          <div class="car-specs">
+            <span class="car-spec"><i class="fas fa-calendar"></i> 2023</span>
+            <span class="car-spec"><i class="fas fa-road"></i> 7,600 km</span>
+            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
+          </div>
+          <div class="car-price">₦110,000,000</div>
+          <div class="car-actions">
+            <a href="#contact" class="car-btn-primary"><i class="fas fa-phone"></i> Enquire</a>
+            <a href="https://wa.me/2349090904121?text=I%20want%20the%20BMW%20M5%20Competition%202023" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end cars-grid -->
+
+    <div style="text-align:center;margin-top:3rem" class="reveal">
+      <a href="https://wa.me/2349090904121?text=Hello%20AutoPrime%2C%20I%20want%20to%20see%20your%20full%20inventory!" target="_blank" class="btn-amber" style="display:inline-flex">
+        <i class="fab fa-whatsapp"></i> View Full Inventory on WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="whyus" class="whyus-section">
+  <div class="whyus-inner">
+    <div class="whyus-grid">
+      <div class="whyus-left reveal">
+        <div class="sec-label">Our Promise</div>
+        <h2 class="sec-title" style="margin-bottom:1.5rem">WHY LAGOS <span class="amber">CHOOSES</span> US</h2>
+        <p>AutoPrime Motors has been Lagos' most trusted premium car dealer for over 8 years. We don't just sell cars — we deliver confidence, quality, and exceptional service from start to finish.</p>
+        <div class="whyus-features">
+          <div class="feat-item"><div class="feat-icon">🛡️</div><h4>100% Verified</h4><p>Full inspection & history check on every vehicle before listing.</p></div>
+          <div class="feat-item"><div class="feat-icon">💸</div><h4>Best Price</h4><p>We guarantee to beat any verified competitor price in Lagos.</p></div>
+          <div class="feat-item"><div class="feat-icon">🚚</div><h4>Fast Delivery</h4><p>Nationwide delivery within 3–5 working days, anywhere in Nigeria.</p></div>
+          <div class="feat-item"><div class="feat-icon">🤝</div><h4>Finance Plans</h4><p>Flexible bank finance and installment payment plans available.</p></div>
+        </div>
+        <a href="#contact" class="btn-amber" style="display:inline-flex;margin-top:2rem"><i class="fas fa-arrow-right"></i> Talk to Our Team</a>
+      </div>
+      <div class="whyus-right reveal">
+        <div class="metric-box"><div class="metric-num">2K+</div><div class="metric-lbl">Cars Sold</div></div>
+        <div class="metric-box"><div class="metric-num">8 Yrs</div><div class="metric-lbl">In Business</div></div>
+        <div class="metric-box"><div class="metric-num">100%</div><div class="metric-lbl">Verified Stock</div></div>
+        <div class="metric-box"><div class="metric-num">4.9★</div><div class="metric-lbl">Customer Rating</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="testi-section">
+  <div class="testi-inner">
+    <div class="testi-header reveal">
+      <div class="sec-label">Client Reviews</div>
+      <h2 class="sec-title">WHAT OUR <span class="amber">CLIENTS</span> SAY</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <div class="testi-text">Got my dream G-Wagon delivered in less than 5 days. The documentation was seamless and the car was immaculate. AutoPrime is simply the best in Lagos!</div>
+        <div class="testi-author"><div class="testi-ava">C</div><div><div class="testi-name">Chief Adebayo O.</div><div class="testi-loc">Ikeja, Lagos</div></div></div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <div class="testi-text">I was skeptical buying a Lexus LX600 online but AutoPrime's team walked me through everything. The car arrived spotless. I've already referred 4 friends!</div>
+        <div class="testi-author"><div class="testi-ava">F</div><div><div class="testi-name">Folake A.</div><div class="testi-loc">Victoria Island, Lagos</div></div></div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <div class="testi-text">Best price in all of Lagos. They beat three other dealers by ₦2M on my BMW 5 Series. Fast process, professional team, and excellent after-sales support.</div>
+        <div class="testi-author"><div class="testi-ava">E</div><div><div class="testi-name">Emeka N.</div><div class="testi-loc">Lekki, Lagos</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <div class="contact-left reveal">
+      <div class="sec-label">Get In Touch</div>
+      <h2 class="sec-title" style="margin-bottom:1.5rem">LET'S FIND YOUR <span class="amber">PERFECT</span> CAR</h2>
+      <p>Tell us what you want and we'll find it. Our team responds within minutes on WhatsApp or you can fill the form for a detailed quote.</p>
+      <div class="contact-items">
+        <a href="tel:+2349090904121" class="contact-item">
+          <div class="c-icon"><i class="fas fa-phone"></i></div>
+          <div><div class="c-label">Call Us</div><div class="c-val">0909 090 4121</div></div>
+        </a>
+        <a href="tel:+2348053216651" class="contact-item">
+          <div class="c-icon"><i class="fas fa-phone"></i></div>
+          <div><div class="c-label">Alternate Line</div><div class="c-val">0805 321 6651</div></div>
+        </a>
+        <a href="mailto:sales@autoprimemotors.ng" class="contact-item">
+          <div class="c-icon"><i class="fas fa-envelope"></i></div>
+          <div><div class="c-label">Email</div><div class="c-val">sales@autoprimemotors.ng</div></div>
+        </a>
+        <div class="contact-item">
+          <div class="c-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><div class="c-label">Showroom</div><div class="c-val">Lekki Phase 1 & Ikeja, Lagos</div></div>
+        </a>
+        <div class="contact-item">
+          <div class="c-icon"><i class="fas fa-clock"></i></div>
+          <div><div class="c-label">Hours</div><div class="c-val">Mon–Sat: 8am–7pm · Sun: 10am–4pm</div></div>
+        </div>
+      </div>
+      <a href="https://wa.me/2349090904121?text=Hello%20AutoPrime%20Motors%2C%20I%27d%20like%20to%20enquire%20about%20a%20car." target="_blank" rel="noopener" class="wa-main">
+        <i class="fab fa-whatsapp"></i> Chat with Us on WhatsApp
+      </a>
+    </div>
+    <div class="contact-form reveal">
+      <h3>Get Instant Quote</h3>
+      <form id="quoteForm" novalidate>
+        <div class="f-row">
+          <div class="f-group">
+            <label class="f-label">Full Name *</label>
+            <input type="text" id="fName" class="f-input" placeholder="Your name">
+            <div class="f-err" id="errName">Required</div>
+          </div>
+          <div class="f-group">
+            <label class="f-label">Phone Number *</label>
+            <input type="tel" id="fPhone" class="f-input" placeholder="0800 000 0000">
+            <div class="f-err" id="errPhone">Valid phone required</div>
+          </div>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Preferred Brand</label>
+          <select id="fBrand" class="f-input">
+            <option value="">Select a brand...</option>
+            <option>Mercedes-Benz</option>
+            <option>BMW</option>
+            <option>Lexus</option>
+            <option>Toyota</option>
+            <option>Range Rover</option>
+            <option>Porsche</option>
+            <option>Audi</option>
+            <option>Bentley</option>
+            <option>Other / Flexible</option>
+          </select>
+        </div>
+        <div class="f-row">
+          <div class="f-group">
+            <label class="f-label">Budget (₦) *</label>
+            <select id="fBudget" class="f-input">
+              <option value="">Select budget...</option>
+              <option>Under ₦20M</option>
+              <option>₦20M – ₦50M</option>
+              <option>₦50M – ₦100M</option>
+              <option>₦100M – ₦200M</option>
+              <option>Above ₦200M</option>
+            </select>
+            <div class="f-err" id="errBudget">Please select a budget</div>
+          </div>
+          <div class="f-group">
+            <label class="f-label">Vehicle Type</label>
+            <select id="fType" class="f-input">
+              <option value="">Select type...</option>
+              <option>SUV / Crossover</option>
+              <option>Sedan</option>
+              <option>Sports Car</option>
+              <option>Pickup / Truck</option>
+              <option>Van / Minibus</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Additional Notes</label>
+          <textarea id="fNote" class="f-input" rows="3" placeholder="Any specific requirements? (colour, year, mileage, etc.)"></textarea>
+        </div>
+        <button type="submit" class="f-submit" id="fSubmit">
+          <span id="fBtnTxt">Send Quote Request</span>
+          <i class="fab fa-whatsapp" id="fBtnIco"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <a href="#" class="nav-logo" style="text-decoration:none;color:var(--white)">
+        <div class="logo-mark">A</div>
+        <div class="logo-text"><h1>AutoPrime</h1><p>Motors · Lagos</p></div>
+      </a>
+      <p>Nigeria's most trusted premium car dealer. New & pre-owned luxury vehicles with guaranteed authenticity, best prices, and nationwide delivery.</p>
+      <div class="foot-socials">
+        <a href="#" class="soc-btn"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="soc-btn"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="soc-btn"><i class="fab fa-twitter"></i></a>
+        <a href="https://wa.me/2349090904121" target="_blank" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" class="soc-btn"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h4>Quick Links</h4>
+      <ul class="foot-links">
+        <li><a href="#inventory">Browse Inventory</a></li>
+        <li><a href="#whyus">Why Choose Us</a></li>
+        <li><a href="#testimonials">Client Reviews</a></li>
+        <li><a href="#contact">Get a Quote</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Brands</h4>
+      <ul class="foot-links">
+        <li><a href="#">Mercedes-Benz</a></li>
+        <li><a href="#">BMW</a></li>
+        <li><a href="#">Lexus</a></li>
+        <li><a href="#">Range Rover</a></li>
+        <li><a href="#">Porsche</a></li>
+        <li><a href="#">Toyota</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Contact</h4>
+      <ul class="foot-links">
+        <li><a href="tel:+2349090904121">0909 090 4121</a></li>
+        <li><a href="tel:+2348053216651">0805 321 6651</a></li>
+        <li><a href="mailto:sales@autoprimemotors.ng">sales@autoprimemotors.ng</a></li>
+        <li><a href="#">Lekki Phase 1, Lagos</a></li>
+        <li><a href="#">Ikeja, Lagos</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 AutoPrime Motors — All Rights Reserved</span>
+    <span>Lekki Phase 1 & Ikeja, Lagos, Nigeria</span>
+  </div>
+</footer>
+
+<!-- FLOATING WA -->
+<a href="https://wa.me/2349090904121?text=Hello%20AutoPrime%20Motors%2C%20I%27m%20interested%20in%20a%20vehicle." target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+<!-- BACK TO TOP -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';});
+});
+
+// Nav & scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',scrollY>60);
+  document.getElementById('btt').classList.toggle('vis',scrollY>400);
+});
+
+// Mobile menu
+document.getElementById('ham').onclick=()=>document.getElementById('mobMenu').classList.add('open');
+document.getElementById('mobClose').onclick=()=>document.getElementById('mobMenu').classList.remove('open');
+function closeMob(){document.getElementById('mobMenu').classList.remove('open');}
+
+// Reveal
+document.querySelectorAll('.reveal').forEach(el=>{
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+  },{threshold:.1}).observe(el);
+});
+
+// Filter
+function filterCars(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.car-card').forEach(card=>{
+    const cats=card.dataset.cat||'';
+    card.style.display=(cat==='all'||cats.includes(cat))?'flex':'none';
+  });
+}
+
+// Toast
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// Form
+document.getElementById('quoteForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const name=document.getElementById('fName'),phone=document.getElementById('fPhone'),budget=document.getElementById('fBudget');
+  let ok=true;
+  ['errName','errPhone','errBudget'].forEach(id=>document.getElementById(id).style.display='none');
+  if(!name.value.trim()){document.getElementById('errName').style.display='block';ok=false;}
+  if(!phone.value.trim()||phone.value.trim().length<7){document.getElementById('errPhone').style.display='block';ok=false;}
+  if(!budget.value){document.getElementById('errBudget').style.display='block';ok=false;}
+  if(!ok)return;
+
+  const btn=document.getElementById('fSubmit');
+  document.getElementById('fBtnTxt').textContent='Sending...';
+  document.getElementById('fBtnIco').className='fas fa-spinner fa-spin';
+  btn.disabled=true;
+
+  setTimeout(()=>{
+    const brand=document.getElementById('fBrand').value||'Flexible';
+    const type=document.getElementById('fType').value||'Any';
+    const note=document.getElementById('fNote').value;
+    const txt=encodeURIComponent(`Hello AutoPrime Motors 🚗\n\nName: ${name.value}\nPhone: ${phone.value}\nBrand: ${brand}\nBudget: ${budget.value}\nType: ${type}\n\nNotes: ${note||'None'}`);
+    window.open(`https://wa.me/2349090904121?text=${txt}`,'_blank');
+
+    document.getElementById('fBtnTxt').textContent='Send Quote Request';
+    document.getElementById('fBtnIco').className='fab fa-whatsapp';
+    btn.disabled=false;
+    toast('✅ Opening WhatsApp with your quote request...');
+    this.reset();
+  },700);
+});
+</script>
+</body>
+</html>
