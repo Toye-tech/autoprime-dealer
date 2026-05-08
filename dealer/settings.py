@@ -7,7 +7,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = ['*']
+
+# ✅ CHANGE 1: Replace ALLOWED_HOSTS = ['*'] with your real domain
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS',
+    default='localhost,127.0.0.1',
+    cast=lambda v: [s.strip() for s in v.split(',')]
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -71,7 +77,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Lagos'
 USE_I18N = True
 USE_TZ = True
 
@@ -83,3 +89,39 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# ==============================================================
+# ✅ CHANGE 2: HTTPS & SECURITY SETTINGS
+# These only activate when DEBUG=False (i.e. in production)
+# ==============================================================
+if not DEBUG:
+    # Force all HTTP traffic to redirect to HTTPS
+    SECURE_SSL_REDIRECT = True
+
+    # Browsers must use HTTPS for 1 year (31536000 seconds)
+    SECURE_HSTS_SECONDS = 31536000
+
+    # Apply HSTS to all subdomains (e.g. www.autoprimemotors.ng)
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+    # Allow site to be submitted to browser HSTS preload lists
+    SECURE_HSTS_PRELOAD = True
+
+    # Session cookie only sent over HTTPS — protects logged-in admin session
+    SESSION_COOKIE_SECURE = True
+
+    # CSRF cookie only sent over HTTPS — protects your inquiry & quote forms
+    CSRF_COOKIE_SECURE = True
+
+    # Prevent browsers from guessing/sniffing content types
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+
+    # Prevent AutoPrime from being embedded in iframes on other sites (clickjacking)
+    X_FRAME_OPTIONS = 'DENY'
+
+    # Tell browser to block detected XSS attacks
+    SECURE_BROWSER_XSS_FILTER = True
+
+    # Use the proxy's HTTPS header (needed on Render, Railway, Heroku etc.)
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
