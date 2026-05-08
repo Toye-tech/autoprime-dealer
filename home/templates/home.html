@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-:root{--black:#050506;--deep:#0a0a0c;--card:#0f0f12;--amber:#f5a623;--amber2:#e8880a;--red:#e63030;--white:#f4f2ee;--grey:#6b6b78;--border:rgba(245,166,35,0.14);--shadow:0 20px 60px rgba(0,0,0,0.5)}
+:root{--black:#050506;--deep:#0a0a0c;--card:#0f0f12;--amber:#f5a623;--amber2:#e8880a;--red:#e63030;--white:#f4f2ee;--grey:#6b6b78;--border:rgba(245,166,35,0.14);--shadow:0 20px 60px rgba(0,0,0,0.5);--green:#16a34a;--blue:#2563eb}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--black);color:var(--white);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
@@ -32,6 +32,8 @@ nav.scrolled{background:rgba(5,5,6,.96);backdrop-filter:blur(24px);border-color:
 .nav-links a:hover::after{width:100%}
 .nav-cta{display:flex;align-items:center;gap:8px;background:var(--amber);color:var(--black);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:10px 22px;border-radius:3px;text-decoration:none;transition:all .2s}
 .nav-cta:hover{background:#fff}
+.nav-admin-btn{display:flex;align-items:center;gap:8px;background:rgba(245,166,35,.08);border:1px solid var(--border);color:var(--amber);font-weight:600;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:9px 16px;border-radius:3px;cursor:pointer;transition:all .2s}
+.nav-admin-btn:hover{background:rgba(245,166,35,.15)}
 .hamburger{display:none;background:none;border:1px solid var(--border);color:var(--white);width:42px;height:42px;border-radius:6px;cursor:pointer;font-size:16px}
 .mob-menu{display:none;position:fixed;inset:0;background:rgba(5,5,6,.98);z-index:200;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
 .mob-menu.open{display:flex}
@@ -91,7 +93,7 @@ nav.scrolled{background:rgba(5,5,6,.96);backdrop-filter:blur(24px);border-color:
 .car-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
 .car-card:hover .car-img-wrap img{transform:scale(1.06)}
 .car-badge{position:absolute;top:14px;left:14px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:2px}
-.badge-new{background:var(--amber);color:var(--black)}.badge-hot{background:var(--red);color:#fff}.badge-deal{background:#16a34a;color:#fff}
+.badge-new{background:var(--amber);color:var(--black)}.badge-hot{background:var(--red);color:#fff}.badge-deal{background:#16a34a;color:#fff}.badge-sold{background:#6b6b78;color:#fff}
 .car-wa-quick{position:absolute;top:14px;right:14px;background:#25D366;color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;opacity:0;transform:scale(.8);transition:all .2s}
 .car-card:hover .car-wa-quick{opacity:1;transform:scale(1)}
 .car-body{padding:1.5rem;flex:1;display:flex;flex-direction:column}
@@ -108,6 +110,8 @@ nav.scrolled{background:rgba(5,5,6,.96);backdrop-filter:blur(24px);border-color:
 .car-btn-wa{background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);color:#25D366;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:12px 16px;border-radius:3px;cursor:pointer;transition:all .2s;text-decoration:none;display:flex;align-items:center;gap:6px}
 .car-btn-wa:hover{background:#25D366;color:#fff;border-color:#25D366}
 .car-card.featured{grid-column:span 2}.car-card.featured .car-img-wrap{height:300px}.car-card.featured .car-name{font-size:36px}.car-card.featured .car-price{font-size:42px}
+.car-sold-overlay{position:absolute;inset:0;background:rgba(5,5,6,.7);display:flex;align-items:center;justify-content:center;z-index:2}
+.car-sold-overlay span{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;letter-spacing:4px;color:#fff;border:3px solid #fff;padding:8px 24px;transform:rotate(-12deg)}
 
 /* ===== 3-STEP INQUIRY MODAL ===== */
 .modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(5,5,6,.93);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .35s ease}
@@ -164,6 +168,146 @@ nav.scrolled{background:rgba(5,5,6,.96);backdrop-filter:blur(24px);border-color:
 .wa-success-btn{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:16px 32px;border-radius:4px;text-decoration:none;transition:all .2s}
 .wa-success-btn:hover{background:#1ebe5c;transform:translateY(-2px)}
 
+/* ===== ADMIN DASHBOARD ===== */
+.admin-overlay{position:fixed;inset:0;z-index:500;background:rgba(5,5,6,.0);pointer-events:none;transition:all .5s ease}
+.admin-overlay.open{background:rgba(5,5,6,.6);pointer-events:all}
+.admin-panel{position:fixed;top:0;right:-100%;width:min(980px,100%);height:100vh;background:var(--deep);border-left:1px solid var(--border);z-index:501;transition:right .45s cubic-bezier(.77,0,.18,1);display:flex;flex-direction:column;overflow:hidden}
+.admin-panel.open{right:0}
+.admin-header{background:var(--black);border-bottom:1px solid var(--border);padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.admin-header-left{display:flex;align-items:center;gap:14px}
+.admin-logo{width:36px;height:36px;background:var(--amber);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--black)}
+.admin-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:3px;text-transform:uppercase}
+.admin-subtitle{font-size:11px;color:var(--grey);letter-spacing:1px}
+.admin-close{background:none;border:1px solid var(--border);color:var(--grey);width:38px;height:38px;border-radius:6px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.admin-close:hover{background:var(--red);border-color:var(--red);color:#fff}
+.admin-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--black)}
+.admin-tab{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:14px 24px;border:none;background:none;color:var(--grey);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:8px}
+.admin-tab:hover{color:var(--white)}
+.admin-tab.active{color:var(--amber);border-bottom-color:var(--amber)}
+.admin-tab-badge{background:var(--amber);color:var(--black);font-size:10px;font-weight:900;padding:2px 7px;border-radius:20px}
+.admin-body{flex:1;overflow-y:auto;padding:2rem}
+.admin-body::-webkit-scrollbar{width:4px}.admin-body::-webkit-scrollbar-thumb{background:var(--border)}
+.admin-tab-content{display:none}.admin-tab-content.active{display:block}
+
+/* Dashboard KPI cards */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;position:relative;overflow:hidden;transition:border-color .2s}
+.kpi-card:hover{border-color:rgba(245,166,35,.3)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi-card.amber::before{background:var(--amber)}
+.kpi-card.green::before{background:#22c55e}
+.kpi-card.red::before{background:var(--red)}
+.kpi-card.blue::before{background:#3b82f6}
+.kpi-icon{font-size:28px;margin-bottom:.75rem;opacity:.6}
+.kpi-num{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;line-height:1;letter-spacing:-1px;margin-bottom:2px}
+.kpi-card.amber .kpi-num{color:var(--amber)}
+.kpi-card.green .kpi-num{color:#22c55e}
+.kpi-card.red .kpi-num{color:var(--red)}
+.kpi-card.blue .kpi-num{color:#3b82f6}
+.kpi-lbl{font-size:11px;color:var(--grey);letter-spacing:1px;text-transform:uppercase}
+
+/* Inventory table */
+.inv-toolbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.inv-search{flex:1;min-width:200px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:5px;padding:11px 16px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--white);outline:none;transition:border-color .2s}
+.inv-search:focus{border-color:var(--amber)}
+.inv-search::placeholder{color:rgba(255,255,255,.2)}
+.btn-add{background:var(--amber);color:var(--black);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:11px 20px;border:none;border-radius:3px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.btn-add:hover{background:#fff}
+.admin-table{width:100%;border-collapse:collapse}
+.admin-table th{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--grey);padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+.admin-table td{padding:12px;border-bottom:1px solid rgba(245,166,35,.05);font-size:13px;vertical-align:middle}
+.admin-table tr:hover td{background:rgba(245,166,35,.02)}
+.admin-table tr:last-child td{border:none}
+.tbl-img{width:60px;height:44px;object-fit:cover;border-radius:4px;border:1px solid var(--border)}
+.tbl-img-placeholder{width:60px;height:44px;border-radius:4px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;color:var(--grey);font-size:18px}
+.tbl-name{font-weight:500;color:var(--white)}
+.tbl-brand{font-size:11px;color:var(--amber);letter-spacing:1px}
+.tbl-price{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--amber)}
+.tbl-badge{display:inline-flex;padding:4px 10px;border-radius:2px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.tbl-badge.new{background:rgba(245,166,35,.15);color:var(--amber)}
+.tbl-badge.hot{background:rgba(230,48,48,.15);color:var(--red)}
+.tbl-badge.deal{background:rgba(22,163,74,.15);color:#22c55e}
+.tbl-badge.sold{background:rgba(107,107,120,.15);color:var(--grey)}
+.tbl-badge.available{background:rgba(22,163,74,.15);color:#22c55e}
+.tbl-actions{display:flex;gap:6px}
+.tbl-btn{width:32px;height:32px;border-radius:4px;border:1px solid var(--border);background:none;color:var(--grey);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.tbl-btn:hover.edit{border-color:var(--amber);color:var(--amber);background:rgba(245,166,35,.08)}
+.tbl-btn:hover.del{border-color:var(--red);color:var(--red);background:rgba(230,48,48,.08)}
+.tbl-btn:hover.toggle{border-color:#22c55e;color:#22c55e;background:rgba(22,163,74,.08)}
+.tbl-btn:hover.view{border-color:#3b82f6;color:#3b82f6;background:rgba(59,130,246,.08)}
+.no-results{text-align:center;padding:3rem;color:var(--grey)}
+.no-results i{font-size:40px;display:block;margin-bottom:1rem;opacity:.3}
+
+/* Car Form (Add/Edit) */
+.car-form-overlay{position:fixed;inset:0;z-index:600;background:rgba(5,5,6,.95);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.car-form-overlay.open{opacity:1;pointer-events:all}
+.car-form-box{background:var(--card);border:1px solid var(--border);border-radius:12px;width:100%;max-width:760px;max-height:90vh;overflow-y:auto}
+.car-form-box::-webkit-scrollbar{width:4px}.car-form-box::-webkit-scrollbar-thumb{background:var(--border)}
+.car-form-head{background:linear-gradient(135deg,rgba(245,166,35,.1),rgba(245,166,35,.02));border-bottom:1px solid var(--border);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2;backdrop-filter:blur(10px)}
+.car-form-head h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.car-form-body{padding:2rem}
+.cf-section{margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.cf-section:last-child{border:none;margin-bottom:0;padding-bottom:0}
+.cf-section-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:1.25rem;display:flex;align-items:center;gap:8px}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.cf-row.three{grid-template-columns:1fr 1fr 1fr}
+.cf-grp{display:flex;flex-direction:column}
+.cf-lbl{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--grey);margin-bottom:8px}
+.cf-inp{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:5px;padding:12px 14px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--white);outline:none;transition:border-color .2s;width:100%}
+.cf-inp:focus{border-color:var(--amber);background:rgba(245,166,35,.03)}
+.cf-inp::placeholder{color:rgba(255,255,255,.18)}
+.cf-inp option{background:#1a1a20;color:var(--white)}
+.cf-textarea{resize:vertical;min-height:80px}
+.cf-img-preview{width:100%;height:160px;border:2px dashed var(--border);border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.02);margin-bottom:1rem;position:relative}
+.cf-img-preview img{width:100%;height:100%;object-fit:cover}
+.cf-img-preview .img-placeholder{text-align:center;color:var(--grey)}
+.cf-img-preview .img-placeholder i{font-size:32px;display:block;margin-bottom:8px;opacity:.4}
+.cf-img-preview .img-placeholder p{font-size:12px}
+.cf-img-url-wrap{display:flex;gap:8px}
+.cf-img-url-wrap .cf-inp{flex:1}
+.cf-apply-url{background:rgba(245,166,35,.1);border:1px solid var(--border);color:var(--amber);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:12px 14px;border-radius:5px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.cf-apply-url:hover{background:rgba(245,166,35,.2)}
+.cf-form-nav{display:flex;gap:1rem;padding:1.5rem 2rem;border-top:1px solid var(--border);background:var(--card);position:sticky;bottom:0}
+.cf-cancel{background:none;border:1px solid var(--border);color:var(--grey);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:14px 24px;border-radius:3px;cursor:pointer;transition:all .2s}
+.cf-cancel:hover{border-color:var(--white);color:var(--white)}
+.cf-save{flex:1;background:var(--amber);color:var(--black);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:14px;border:none;border-radius:3px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.cf-save:hover{background:#fff;transform:translateY(-1px)}
+.badge-radio-group{display:flex;gap:.75rem;flex-wrap:wrap}
+.badge-radio{display:flex;align-items:center;gap:8px;padding:8px 16px;border:1px solid var(--border);border-radius:3px;cursor:pointer;transition:all .2s;font-size:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--grey)}
+.badge-radio input{display:none}
+.badge-radio.selected-new{border-color:var(--amber);color:var(--amber);background:rgba(245,166,35,.08)}
+.badge-radio.selected-hot{border-color:var(--red);color:var(--red);background:rgba(230,48,48,.08)}
+.badge-radio.selected-deal{border-color:#22c55e;color:#22c55e;background:rgba(22,163,74,.08)}
+.badge-radio:hover{border-color:rgba(245,166,35,.3)}
+
+/* Confirm delete */
+.confirm-overlay{position:fixed;inset:0;z-index:700;background:rgba(5,5,6,.9);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s}
+.confirm-overlay.open{opacity:1;pointer-events:all}
+.confirm-box{background:var(--card);border:1px solid rgba(230,48,48,.3);border-radius:12px;padding:2.5rem;max-width:420px;width:100%;text-align:center}
+.confirm-icon{font-size:40px;margin-bottom:1rem}
+.confirm-box h3{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem}
+.confirm-box p{font-size:13px;color:var(--grey);line-height:1.7;margin-bottom:2rem}
+.confirm-box p strong{color:var(--white)}
+.confirm-btns{display:flex;gap:1rem}
+.confirm-cancel-btn{flex:1;background:none;border:1px solid var(--border);color:var(--grey);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:14px;border-radius:3px;cursor:pointer;transition:all .2s}
+.confirm-cancel-btn:hover{border-color:var(--white);color:var(--white)}
+.confirm-del-btn{flex:1;background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:14px;border:none;border-radius:3px;cursor:pointer;transition:all .2s}
+.confirm-del-btn:hover{background:#c72020}
+
+/* Activity log */
+.activity-list{display:flex;flex-direction:column;gap:.75rem}
+.activity-item{display:flex;align-items:flex-start;gap:12px;padding:1rem;background:var(--card);border:1px solid var(--border);border-radius:6px}
+.act-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.act-icon.add{background:rgba(22,163,74,.15);color:#22c55e}
+.act-icon.edit{background:rgba(245,166,35,.15);color:var(--amber)}
+.act-icon.del{background:rgba(230,48,48,.15);color:var(--red)}
+.act-icon.sold{background:rgba(107,107,120,.15);color:var(--grey)}
+.act-body{flex:1}
+.act-text{font-size:13px;color:var(--white);line-height:1.5}
+.act-text strong{color:var(--amber)}
+.act-time{font-size:11px;color:var(--grey);margin-top:3px}
+
+/* Whyus, testimonials, contact, footer (same as before) */
 .whyus-section{padding:7rem 5%;background:var(--black);border-top:1px solid var(--border)}
 .whyus-inner{max-width:1400px;margin:0 auto}
 .whyus-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
@@ -248,25 +392,286 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
 @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
 .reveal.vis{opacity:1;transform:translateY(0)}
-@media(max-width:1200px){.cars-grid{grid-template-columns:1fr 1fr}.car-card.featured{grid-column:span 1}.car-card.featured .car-img-wrap{height:220px}}
+@media(max-width:1200px){.cars-grid{grid-template-columns:1fr 1fr}.car-card.featured{grid-column:span 1}.car-card.featured .car-img-wrap{height:220px}.kpi-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:1024px){.hero-content{grid-template-columns:1fr}.hero-panel{display:none}.whyus-grid{grid-template-columns:1fr;gap:3rem}.contact-inner{grid-template-columns:1fr;gap:3rem}.foot-inner{grid-template-columns:1fr 1fr;gap:2.5rem}}
-@media(max-width:768px){.nav-links,.nav-cta{display:none}.hamburger{display:flex;align-items:center;justify-content:center}.stats-inner{grid-template-columns:repeat(2,1fr)}.cars-grid{grid-template-columns:1fr}.testi-grid{grid-template-columns:1fr}.whyus-features{grid-template-columns:1fr}.whyus-right{grid-template-columns:1fr}.inv-header{flex-direction:column;align-items:flex-start}.f-row{grid-template-columns:1fr}.foot-inner{grid-template-columns:1fr}.foot-bottom{flex-direction:column;text-align:center}.mf-row{grid-template-columns:1fr}.intent-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.stat-num{font-size:40px}.hero-btns{flex-direction:column}.btn-amber,.btn-outline{text-align:center;justify-content:center}.contact-form{padding:1.5rem}body{cursor:auto}.cur,.cur-ring{display:none}.intent-grid{grid-template-columns:1fr}.modal-body{padding:1.5rem}.modal-head{padding:1.25rem 1.5rem}}
+@media(max-width:768px){.nav-links,.nav-cta{display:none}.hamburger{display:flex;align-items:center;justify-content:center}.stats-inner{grid-template-columns:repeat(2,1fr)}.cars-grid{grid-template-columns:1fr}.testi-grid{grid-template-columns:1fr}.whyus-features{grid-template-columns:1fr}.whyus-right{grid-template-columns:1fr}.inv-header{flex-direction:column;align-items:flex-start}.f-row{grid-template-columns:1fr}.foot-inner{grid-template-columns:1fr}.foot-bottom{flex-direction:column;text-align:center}.mf-row{grid-template-columns:1fr}.intent-grid{grid-template-columns:1fr 1fr}.cf-row{grid-template-columns:1fr}.cf-row.three{grid-template-columns:1fr}.kpi-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.stat-num{font-size:40px}.hero-btns{flex-direction:column}.btn-amber,.btn-outline{text-align:center;justify-content:center}.contact-form{padding:1.5rem}body{cursor:auto}.cur,.cur-ring{display:none}.intent-grid{grid-template-columns:1fr}.modal-body{padding:1.5rem}.modal-head{padding:1.25rem 1.5rem}.kpi-grid{grid-template-columns:1fr}}
+
+/* Login overlay for admin */
+.login-overlay{position:fixed;inset:0;z-index:600;background:rgba(5,5,6,.97);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s}
+.login-overlay.open{opacity:1;pointer-events:all}
+.login-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:3rem;width:100%;max-width:400px;text-align:center}
+.login-box .logo-mark{margin:0 auto 1.5rem;width:52px;height:52px;font-size:26px}
+.login-box h3{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem}
+.login-box p{font-size:13px;color:var(--grey);margin-bottom:2rem}
+.login-inp-grp{margin-bottom:1rem;text-align:left}
+.login-lbl{display:block;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--grey);margin-bottom:8px}
+.login-inp{width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:5px;padding:13px 16px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--white);outline:none;transition:border-color .2s}
+.login-inp:focus{border-color:var(--amber);background:rgba(245,166,35,.03)}
+.login-btn{width:100%;background:var(--amber);color:var(--black);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:15px;border:none;border-radius:3px;cursor:pointer;transition:all .2s;margin-top:.75rem}
+.login-btn:hover{background:#fff}
+.login-err{font-size:12px;color:var(--red);margin-top:.75rem;display:none}
+.login-hint{font-size:11px;color:var(--grey);margin-top:1rem;opacity:.6}
 </style>
 </head>
 <body>
-
 <div class="cur" id="cur"></div>
 <div class="cur-ring" id="curRing"></div>
 
-<!-- ===== 3-STEP BUY INQUIRY MODAL ===== -->
+<!-- ===== ADMIN LOGIN ===== -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="logo-mark">A</div>
+    <h3>Admin Access</h3>
+    <p>Enter your credentials to manage inventory</p>
+    <div class="login-inp-grp"><label class="login-lbl">Username</label><input type="text" id="loginUser" class="login-inp" placeholder="admin"></div>
+    <div class="login-inp-grp"><label class="login-lbl">Password</label><input type="password" id="loginPass" class="login-inp" placeholder="••••••••"></div>
+    <div class="login-err" id="loginErr">Invalid credentials. Try admin / admin123</div>
+    <button class="login-btn" onclick="doLogin()">Login to Dashboard</button>
+    <p class="login-hint">Demo: username <strong>admin</strong> / password <strong>admin123</strong></p>
+    <button onclick="closeLogin()" style="background:none;border:none;color:var(--grey);font-size:12px;cursor:pointer;margin-top:1rem;text-decoration:underline">Cancel</button>
+  </div>
+</div>
+
+<!-- ===== ADMIN PANEL ===== -->
+<div class="admin-overlay" id="adminOverlay" onclick="handleOverlayClick(event)">
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-header">
+      <div class="admin-header-left">
+        <div class="admin-logo">A</div>
+        <div>
+          <div class="admin-title">AutoPrime Dashboard</div>
+          <div class="admin-subtitle">Inventory Management System</div>
+        </div>
+      </div>
+      <button class="admin-close" onclick="closeAdmin()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('overview',this)"><i class="fas fa-chart-bar"></i> Overview</button>
+      <button class="admin-tab" onclick="switchAdminTab('inventory',this)"><i class="fas fa-car"></i> Inventory <span class="admin-tab-badge" id="invCount">0</span></button>
+      <button class="admin-tab" onclick="switchAdminTab('activity',this)"><i class="fas fa-history"></i> Activity</button>
+    </div>
+    <div class="admin-body">
+      <!-- OVERVIEW TAB -->
+      <div class="admin-tab-content active" id="tab-overview">
+        <div class="kpi-grid">
+          <div class="kpi-card amber"><div class="kpi-icon">🚗</div><div class="kpi-num" id="kpi-total">0</div><div class="kpi-lbl">Total Vehicles</div></div>
+          <div class="kpi-card green"><div class="kpi-icon">✅</div><div class="kpi-num" id="kpi-available">0</div><div class="kpi-lbl">Available</div></div>
+          <div class="kpi-card red"><div class="kpi-icon">🔴</div><div class="kpi-num" id="kpi-sold">0</div><div class="kpi-lbl">Sold</div></div>
+          <div class="kpi-card blue"><div class="kpi-icon">💰</div><div class="kpi-num" id="kpi-value">₦0</div><div class="kpi-lbl">Total Stock Value</div></div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1.5rem">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:1.25rem"><i class="fas fa-chart-pie" style="margin-right:8px"></i> Stock by Brand</div>
+          <div id="brandChart" style="display:flex;flex-direction:column;gap:8px"></div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:1.25rem"><i class="fas fa-bolt" style="margin-right:8px"></i> Quick Actions</div>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap">
+            <button class="btn-add" onclick="switchAdminTab('inventory',document.querySelector('[onclick=\\'switchAdminTab(\\'inventory\\',this)\\']'));openCarForm()"><i class="fas fa-plus"></i> Add New Vehicle</button>
+            <button onclick="switchAdminTab('inventory',document.querySelectorAll('.admin-tab')[1])" style="background:none;border:1px solid var(--border);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:11px 20px;border-radius:3px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.borderColor='rgba(245,166,35,.4)'" onmouseout="this.style.borderColor='var(--border)'"><i class="fas fa-list"></i> View All Cars</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- INVENTORY TAB -->
+      <div class="admin-tab-content" id="tab-inventory">
+        <div class="inv-toolbar">
+          <input type="text" class="inv-search" id="adminSearch" placeholder="Search by name, brand, model..." oninput="renderAdminTable()">
+          <select id="adminBrandFilter" class="inv-search" style="max-width:180px;flex:none" onchange="renderAdminTable()">
+            <option value="">All Brands</option>
+          </select>
+          <select id="adminStatusFilter" class="inv-search" style="max-width:160px;flex:none" onchange="renderAdminTable()">
+            <option value="">All Status</option>
+            <option value="available">Available</option>
+            <option value="sold">Sold</option>
+          </select>
+          <button class="btn-add" onclick="openCarForm()"><i class="fas fa-plus"></i> Add Vehicle</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Photo</th>
+                <th>Vehicle</th>
+                <th>Year</th>
+                <th>Category</th>
+                <th>Price (₦)</th>
+                <th>Badge</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ACTIVITY TAB -->
+      <div class="admin-tab-content" id="tab-activity">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:2px;text-transform:uppercase">Recent Activity</div>
+          <button onclick="clearActivity()" style="background:none;border:1px solid var(--border);color:var(--grey);font-size:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;border-radius:3px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--grey)'">Clear All</button>
+        </div>
+        <div class="activity-list" id="activityList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CAR FORM (ADD/EDIT) ===== -->
+<div class="car-form-overlay" id="carFormOverlay">
+  <div class="car-form-box">
+    <div class="car-form-head">
+      <h3 id="cfTitle">Add New Vehicle</h3>
+      <button class="modal-close-btn" onclick="closeCarForm()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="car-form-body">
+      <input type="hidden" id="cfId">
+
+      <div class="cf-section">
+        <div class="cf-section-title"><i class="fas fa-car"></i> Vehicle Identity</div>
+        <div class="cf-row">
+          <div class="cf-grp">
+            <label class="cf-lbl">Brand / Make *</label>
+            <select id="cfBrand" class="cf-inp">
+              <option value="">Select brand...</option>
+              <option>Toyota</option><option>Mercedes-Benz</option><option>BMW</option>
+              <option>Lexus</option><option>Honda</option><option>Nissan</option>
+              <option>Volkswagen</option><option>Hyundai</option><option>Kia</option>
+              <option>Land Rover</option><option>Porsche</option><option>Audi</option>
+              <option>Bentley</option><option>Ferrari</option><option>Lamborghini</option>
+              <option>Ford</option><option>Chevrolet</option><option>Mitsubishi</option>
+              <option>Infiniti</option><option>Acura</option><option>Mazda</option>
+              <option>Subaru</option><option>Peugeot</option><option>Renault</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="cf-grp">
+            <label class="cf-lbl">Model Name *</label>
+            <input type="text" id="cfModel" class="cf-inp" placeholder="e.g. Corolla, Camry, G-Wagon...">
+          </div>
+        </div>
+        <div class="cf-row three">
+          <div class="cf-grp">
+            <label class="cf-lbl">Year *</label>
+            <select id="cfYear" class="cf-inp"></select>
+          </div>
+          <div class="cf-grp">
+            <label class="cf-lbl">Category *</label>
+            <select id="cfCategory" class="cf-inp">
+              <option value="">Select...</option>
+              <option value="suv">SUV / Crossover</option>
+              <option value="sedan">Sedan</option>
+              <option value="luxury">Luxury</option>
+              <option value="sport">Sports Car</option>
+              <option value="pickup">Pickup / Truck</option>
+              <option value="van">Van / Minibus</option>
+            </select>
+          </div>
+          <div class="cf-grp">
+            <label class="cf-lbl">Mileage (km)</label>
+            <input type="number" id="cfMileage" class="cf-inp" placeholder="e.g. 15000">
+          </div>
+        </div>
+        <div class="cf-row three">
+          <div class="cf-grp">
+            <label class="cf-lbl">Fuel Type</label>
+            <select id="cfFuel" class="cf-inp">
+              <option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Electric</option>
+            </select>
+          </div>
+          <div class="cf-grp">
+            <label class="cf-lbl">Transmission</label>
+            <select id="cfTransmission" class="cf-inp">
+              <option>Automatic</option><option>Manual</option>
+            </select>
+          </div>
+          <div class="cf-grp">
+            <label class="cf-lbl">Colour</label>
+            <input type="text" id="cfColour" class="cf-inp" placeholder="e.g. Black, White...">
+          </div>
+        </div>
+      </div>
+
+      <div class="cf-section">
+        <div class="cf-section-title"><i class="fas fa-tag"></i> Pricing & Status</div>
+        <div class="cf-row">
+          <div class="cf-grp">
+            <label class="cf-lbl">Price (₦) *</label>
+            <input type="number" id="cfPrice" class="cf-inp" placeholder="e.g. 45000000">
+          </div>
+          <div class="cf-grp">
+            <label class="cf-lbl">Price Note</label>
+            <input type="text" id="cfPriceNote" class="cf-inp" placeholder="e.g. Negotiable, Fixed...">
+          </div>
+        </div>
+        <div class="cf-grp" style="margin-bottom:1rem">
+          <label class="cf-lbl">Badge / Label</label>
+          <div class="badge-radio-group" id="badgeGroup">
+            <label class="badge-radio"><input type="radio" name="cfBadge" value="new"> New Arrival</label>
+            <label class="badge-radio"><input type="radio" name="cfBadge" value="hot"> 🔥 Hot</label>
+            <label class="badge-radio"><input type="radio" name="cfBadge" value="deal"> Best Deal</label>
+            <label class="badge-radio"><input type="radio" name="cfBadge" value="none" checked> No Badge</label>
+          </div>
+        </div>
+        <div class="cf-grp" style="margin-bottom:1rem">
+          <label class="cf-lbl">Featured (spans 2 columns)</label>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+            <input type="checkbox" id="cfFeatured" style="width:18px;height:18px;accent-color:var(--amber)">
+            <span style="font-size:13px;color:var(--grey)">Make this vehicle a featured/hero card</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cf-section">
+        <div class="cf-section-title"><i class="fas fa-image"></i> Vehicle Photo</div>
+        <div class="cf-img-preview" id="cfImgPreview">
+          <div class="img-placeholder"><i class="fas fa-camera"></i><p>No image set</p></div>
+        </div>
+        <div class="cf-img-url-wrap">
+          <input type="text" id="cfImgUrl" class="cf-inp" placeholder="Paste image URL (Unsplash, direct link, etc.)">
+          <button class="cf-apply-url" onclick="previewImg()">Preview</button>
+        </div>
+        <p style="font-size:11px;color:var(--grey);margin-top:6px">Tip: Use Unsplash URLs like https://images.unsplash.com/photo-... or any direct image link.</p>
+      </div>
+
+      <div class="cf-section">
+        <div class="cf-section-title"><i class="fas fa-phone"></i> Contact & WhatsApp</div>
+        <div class="cf-grp">
+          <label class="cf-lbl">WhatsApp Message (auto-filled)</label>
+          <input type="text" id="cfWaMsg" class="cf-inp" placeholder="Auto-generated, or type custom message">
+        </div>
+      </div>
+
+    </div>
+    <div class="cf-form-nav">
+      <button class="cf-cancel" onclick="closeCarForm()">Cancel</button>
+      <button class="cf-save" onclick="saveCar()"><i class="fas fa-save"></i> <span id="cfSaveTxt">Save Vehicle</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONFIRM DELETE ===== -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="confirm-icon">⚠️</div>
+    <h3>Delete Vehicle</h3>
+    <p>Are you sure you want to delete <strong id="confirmCarName"></strong>? This action cannot be undone.</p>
+    <div class="confirm-btns">
+      <button class="confirm-cancel-btn" onclick="closeConfirm()">Cancel</button>
+      <button class="confirm-del-btn" onclick="confirmDelete()"><i class="fas fa-trash"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 3-STEP INQUIRY MODAL ===== -->
 <div class="modal-overlay" id="buyModal">
   <div class="modal-box">
     <div class="modal-head">
       <div>
         <div class="mh-brand" id="mhBrand">Mercedes-Benz</div>
         <div class="mh-name" id="mhName">G-Wagon AMG 2024</div>
-        <div class="mh-price" id="mhPrice">195,000,000</div>
+        <div class="mh-price" id="mhPrice">₦195,000,000</div>
       </div>
       <button class="modal-close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
     </div>
@@ -275,16 +680,14 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
       <span class="prog-txt" id="progTxt">Step 1 of 3</span>
     </div>
     <div class="modal-body">
-
-      <!-- STEP 1 -->
       <div class="m-step active" id="ms1">
         <div class="m-step-title">What Is Your Intent?</div>
         <div class="m-step-sub">Tell us how you plan to buy so we can prepare the best offer for you.</div>
         <div class="intent-grid">
-          <div class="intent-card" onclick="pickIntent(this,'Buy Immediately')"><div class="ic-icon">&#128273;</div><h4>Buy Now</h4><p>I'm ready to buy immediately and want to close fast.</p></div>
-          <div class="intent-card" onclick="pickIntent(this,'Test Drive First')"><div class="ic-icon">&#128663;</div><h4>Test Drive</h4><p>I want to come in for a test drive before deciding.</p></div>
-          <div class="intent-card" onclick="pickIntent(this,'Need Finance')"><div class="ic-icon">&#128179;</div><h4>Need Finance</h4><p>I need a payment plan or bank finance arranged.</p></div>
-          <div class="intent-card" onclick="pickIntent(this,'Just Enquiring')"><div class="ic-icon">&#128172;</div><h4>Enquiring</h4><p>I want more details and photos before deciding.</p></div>
+          <div class="intent-card" onclick="pickIntent(this,'Buy Immediately')"><div class="ic-icon">🔑</div><h4>Buy Now</h4><p>I'm ready to buy immediately and want to close fast.</p></div>
+          <div class="intent-card" onclick="pickIntent(this,'Test Drive First')"><div class="ic-icon">🚗</div><h4>Test Drive</h4><p>I want to come in for a test drive before deciding.</p></div>
+          <div class="intent-card" onclick="pickIntent(this,'Need Finance')"><div class="ic-icon">💳</div><h4>Need Finance</h4><p>I need a payment plan or bank finance arranged.</p></div>
+          <div class="intent-card" onclick="pickIntent(this,'Just Enquiring')"><div class="ic-icon">💬</div><h4>Enquiring</h4><p>I want more details and photos before deciding.</p></div>
         </div>
         <div class="mf-grp">
           <label class="mf-lbl">When are you looking to buy?</label>
@@ -299,132 +702,71 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
           <button class="m-next" id="s1Next" onclick="gotoStep(2)" disabled>Continue <i class="fas fa-arrow-right"></i></button>
         </div>
       </div>
-
-      <!-- STEP 2 -->
       <div class="m-step" id="ms2">
         <div class="m-step-title">Your Contact Details</div>
         <div class="m-step-sub">We'll use this to send you full specs, photos and our best price offer directly.</div>
         <div class="mf-row">
-          <div class="mf-grp">
-            <label class="mf-lbl">Full Name *</label>
-            <input type="text" id="mFullName" class="mf-inp" placeholder="Your full name">
-            <div class="mf-err" id="errMN">Please enter your name</div>
-          </div>
-          <div class="mf-grp">
-            <label class="mf-lbl">Phone Number *</label>
-            <input type="tel" id="mPhone" class="mf-inp" placeholder="0800 000 0000">
-            <div class="mf-err" id="errMP">Enter a valid phone number</div>
-          </div>
+          <div class="mf-grp"><label class="mf-lbl">Full Name *</label><input type="text" id="mFullName" class="mf-inp" placeholder="Your full name"><div class="mf-err" id="errMN">Please enter your name</div></div>
+          <div class="mf-grp"><label class="mf-lbl">Phone Number *</label><input type="tel" id="mPhone" class="mf-inp" placeholder="0800 000 0000"><div class="mf-err" id="errMP">Enter a valid phone number</div></div>
         </div>
-        <div class="mf-grp">
-          <label class="mf-lbl">WhatsApp Number (if different from phone)</label>
-          <input type="tel" id="mWa" class="mf-inp" placeholder="Leave blank if same as above">
+        <div class="mf-grp"><label class="mf-lbl">WhatsApp (if different from phone)</label><input type="tel" id="mWa" class="mf-inp" placeholder="Leave blank if same as above"></div>
+        <div class="mf-grp"><label class="mf-lbl">Your State / Location</label>
+          <select id="mLoc" class="mf-inp"><option value="">Select your state...</option><option>Lagos</option><option>Abuja (FCT)</option><option>Rivers</option><option>Kano</option><option>Oyo</option><option>Delta</option><option>Anambra</option><option>Enugu</option><option>Kaduna</option><option>Other State</option></select>
         </div>
-        <div class="mf-grp">
-          <label class="mf-lbl">Your State / Location</label>
-          <select id="mLoc" class="mf-inp">
-            <option value="">Select your state...</option>
-            <option>Lagos</option><option>Abuja (FCT)</option><option>Rivers</option>
-            <option>Kano</option><option>Oyo</option><option>Delta</option>
-            <option>Anambra</option><option>Enugu</option><option>Kaduna</option>
-            <option>Other State</option>
-          </select>
-        </div>
-        <div class="mf-grp">
-          <label class="mf-lbl">Will you need delivery?</label>
-          <div class="tog-grp" id="tgDelivery">
-            <button class="tog-btn" onclick="togSet('tgDelivery',this,'Yes - Deliver to Me')">Yes - Deliver to Me</button>
-            <button class="tog-btn" onclick="togSet('tgDelivery',this,'No - I will Pick Up')">No - I'll Pick Up</button>
-          </div>
+        <div class="mf-grp"><label class="mf-lbl">Will you need delivery?</label>
+          <div class="tog-grp" id="tgDelivery"><button class="tog-btn" onclick="togSet('tgDelivery',this,'Yes - Deliver to Me')">Yes - Deliver to Me</button><button class="tog-btn" onclick="togSet('tgDelivery',this,'No - I will Pick Up')">No - I'll Pick Up</button></div>
         </div>
         <div class="m-nav">
           <button class="m-back" onclick="gotoStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
           <button class="m-next" onclick="gotoStep(3)">Continue <i class="fas fa-arrow-right"></i></button>
         </div>
       </div>
-
-      <!-- STEP 3 -->
       <div class="m-step" id="ms3">
         <div class="m-step-title">Your Preferences</div>
         <div class="m-step-sub">Help us give you the sharpest deal on this exact vehicle.</div>
         <div class="mf-row">
-          <div class="mf-grp">
-            <label class="mf-lbl">Preferred Colour</label>
-            <select id="mColour" class="mf-inp">
-              <option value="">Any colour</option>
-              <option>Black</option><option>White</option><option>Silver</option>
-              <option>Grey</option><option>Blue</option><option>Red</option><option>Other</option>
-            </select>
-          </div>
-          <div class="mf-grp">
-            <label class="mf-lbl">Payment Method</label>
-            <select id="mPayment" class="mf-inp">
-              <option value="">Select...</option>
-              <option>Full Cash Payment</option><option>Bank Transfer</option>
-              <option>Bank Finance / Loan</option><option>Installment Plan</option>
-              <option>Trade-In (swap my car)</option>
-            </select>
-          </div>
+          <div class="mf-grp"><label class="mf-lbl">Preferred Colour</label><select id="mColour" class="mf-inp"><option value="">Any colour</option><option>Black</option><option>White</option><option>Silver</option><option>Grey</option><option>Blue</option><option>Red</option><option>Other</option></select></div>
+          <div class="mf-grp"><label class="mf-lbl">Payment Method</label><select id="mPayment" class="mf-inp"><option value="">Select...</option><option>Full Cash Payment</option><option>Bank Transfer</option><option>Bank Finance / Loan</option><option>Installment Plan</option><option>Trade-In (swap my car)</option></select></div>
         </div>
-        <div class="mf-grp">
-          <label class="mf-lbl">Do you have a trade-in vehicle?</label>
-          <div class="tog-grp" id="tgTrade">
-            <button class="tog-btn" onclick="togSet('tgTrade',this,'Yes');showField('tradeField',true)">Yes - I Have a Trade-In</button>
-            <button class="tog-btn" onclick="togSet('tgTrade',this,'No');showField('tradeField',false)">No Trade-In</button>
-          </div>
+        <div class="mf-grp"><label class="mf-lbl">Do you have a trade-in vehicle?</label>
+          <div class="tog-grp" id="tgTrade"><button class="tog-btn" onclick="togSet('tgTrade',this,'Yes');showField('tradeField',true)">Yes - I Have a Trade-In</button><button class="tog-btn" onclick="togSet('tgTrade',this,'No');showField('tradeField',false)">No Trade-In</button></div>
         </div>
-        <div class="mf-grp" id="tradeField" style="display:none">
-          <label class="mf-lbl">Trade-In Vehicle Details</label>
-          <input type="text" id="mTradeDetail" class="mf-inp" placeholder="e.g. Toyota Camry 2020, 45,000km, good condition">
-        </div>
-        <div class="mf-grp">
-          <label class="mf-lbl">Any Special Requests or Questions?</label>
-          <textarea id="mNotes" class="mf-inp" rows="3" placeholder="e.g. Need full inspection report, specific colour, urgent timeline..."></textarea>
-        </div>
+        <div class="mf-grp" id="tradeField" style="display:none"><label class="mf-lbl">Trade-In Vehicle Details</label><input type="text" id="mTradeDetail" class="mf-inp" placeholder="e.g. Toyota Camry 2020, 45,000km, good condition"></div>
+        <div class="mf-grp"><label class="mf-lbl">Any Special Requests or Questions?</label><textarea id="mNotes" class="mf-inp" rows="3" placeholder="e.g. Need full inspection report, specific colour..."></textarea></div>
         <div class="m-nav">
           <button class="m-back" onclick="gotoStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
-          <button class="m-next" onclick="submitBuyInquiry()" id="submitBtn">
-            <span id="submitTxt">Send My Inquiry</span>
-            <i class="fab fa-whatsapp" id="submitIco"></i>
-          </button>
+          <button class="m-next" onclick="submitBuyInquiry()" id="submitBtn"><span id="submitTxt">Send My Inquiry</span><i class="fab fa-whatsapp" id="submitIco"></i></button>
         </div>
       </div>
-
-      <!-- SUCCESS -->
       <div class="m-step" id="msSuccess">
         <div class="success-wrap">
-          <div class="success-icon">&#10003;</div>
+          <div class="success-icon">✓</div>
           <h3>Inquiry Sent!</h3>
-          <p>Your inquiry is now with our team on WhatsApp. We respond within minutes with full details, extra photos, and our sharpest price.</p>
+          <p>Your inquiry is now with our team on WhatsApp. We respond within minutes.</p>
           <div class="sum-box" id="sumBox"></div>
-          <a href="#" id="waSuccessLink" target="_blank" class="wa-success-btn">
-            <i class="fab fa-whatsapp"></i> Open WhatsApp Chat
-          </a>
-          <div style="margin-top:1.25rem">
-            <button onclick="closeModal()" style="background:none;border:none;color:var(--grey);font-size:13px;cursor:pointer;text-decoration:underline">Close &amp; Continue Browsing</button>
-          </div>
+          <a href="#" id="waSuccessLink" target="_blank" class="wa-success-btn"><i class="fab fa-whatsapp"></i> Open WhatsApp Chat</a>
+          <div style="margin-top:1.25rem"><button onclick="closeModal()" style="background:none;border:none;color:var(--grey);font-size:13px;cursor:pointer;text-decoration:underline">Close &amp; Continue Browsing</button></div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
 
 <!-- TICKER -->
 <div class="ticker">
-  <div class="ticker-track">
-    <span class="ticker-item">&#128293; New arrivals: Mercedes G-Wagon 2024 just landed</span>
-    <span class="ticker-item">&#9670; Best price guarantee - we beat any competitor</span>
-    <span class="ticker-item">&#9670; Nationwide delivery across Nigeria</span>
-    <span class="ticker-item">&#9670; Flexible payment &amp; bank finance available</span>
-    <span class="ticker-item">&#9670; 100% verified vehicles - full inspection report</span>
-    <span class="ticker-item">&#9670; Call us: 0803 943 2707 | 0813 910 2838 </span>
-    <span class="ticker-item">&#128293; New arrivals: Mercedes G-Wagon 2024 just landed</span>
-    <span class="ticker-item">&#9670; Best price guarantee - we beat any competitor</span>
-    <span class="ticker-item">&#9670; Nationwide delivery across Nigeria</span>
-    <span class="ticker-item">&#9670; Flexible payment &amp; bank finance available</span>
-    <span class="ticker-item">&#9670; 100% verified vehicles - full inspection report</span>
-    <span class="ticker-item">&#9670; Call us: 0803 943 2707 | 0813 910 2838</span>
+  <div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item">🔥 New arrivals: Mercedes G-Wagon 2024 just landed</span>
+    <span class="ticker-item">◆ Best price guarantee - we beat any competitor</span>
+    <span class="ticker-item">◆ Nationwide delivery across Nigeria</span>
+    <span class="ticker-item">◆ Flexible payment &amp; bank finance available</span>
+    <span class="ticker-item">◆ 100% verified vehicles - full inspection report</span>
+    <span class="ticker-item">◆ Call us: 0803 943 2707 | 0813 910 2838</span>
+    <span class="ticker-item">🔥 New arrivals: Mercedes G-Wagon 2024 just landed</span>
+    <span class="ticker-item">◆ Best price guarantee - we beat any competitor</span>
+    <span class="ticker-item">◆ Nationwide delivery across Nigeria</span>
+    <span class="ticker-item">◆ Flexible payment &amp; bank finance available</span>
+    <span class="ticker-item">◆ 100% verified vehicles - full inspection report</span>
+    <span class="ticker-item">◆ Call us: 0803 943 2707 | 0813 910 2838</span>
   </div>
 </div>
 
@@ -440,9 +782,10 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
     <li><a href="#testimonials">Reviews</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="https://wa.me/2348139107838?text=Hello%20AutoPrime%20Motors%2C%20I%27m%20interested%20in%20a%20car." target="_blank" rel="noopener" class="nav-cta">
-    <i class="fab fa-whatsapp"></i> WhatsApp Us
-  </a>
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="nav-admin-btn" onclick="openAdminPortal()"><i class="fas fa-shield-alt"></i> Admin</button>
+    <a href="https://wa.me/2348139107838?text=Hello%20AutoPrime%20Motors%2C%20I%27m%20interested%20in%20a%20car." target="_blank" rel="noopener" class="nav-cta"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+  </div>
   <button class="hamburger" id="ham"><i class="fas fa-bars"></i></button>
 </nav>
 
@@ -472,15 +815,12 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
     <div class="hero-panel">
       <div class="hp-header"><h3>Live Inventory</h3><span style="font-size:10px;color:var(--grey);letter-spacing:2px;text-transform:uppercase">Updated Daily</span></div>
       <div class="hp-body">
-        <div class="hp-row"><span class="hp-label">Cars in Stock</span><span class="hp-val">47+</span></div>
-        <div class="hp-row"><span class="hp-label">Starting From</span><span class="hp-val">18M</span></div>
-        <div class="hp-row"><span class="hp-label">Sold This Month</span><span class="hp-val">23</span></div>
+        <div class="hp-row"><span class="hp-label">Cars in Stock</span><span class="hp-val" id="heroStockCount">0</span></div>
+        <div class="hp-row"><span class="hp-label">Starting From</span><span class="hp-val" id="heroStartFrom">—</span></div>
+        <div class="hp-row"><span class="hp-label">Sold This Month</span><span class="hp-val" id="heroSoldCount">0</span></div>
         <div class="hp-row"><span class="hp-label">Avg. Delivery Time</span><span class="hp-val">3 Days</span></div>
       </div>
-      <div class="hp-footer">
-        <span>All Verified &amp; Cleared</span>
-        <div class="speedlines"><div class="sl"></div><div class="sl"></div><div class="sl"></div><div class="sl"></div><div class="sl"></div></div>
-      </div>
+      <div class="hp-footer"><span>All Verified &amp; Cleared</span><div class="speedlines"><div class="sl"></div><div class="sl"></div><div class="sl"></div><div class="sl"></div><div class="sl"></div></div></div>
     </div>
   </div>
 </section>
@@ -489,9 +829,9 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat-item reveal"><div class="stat-num">2,000+</div><div class="stat-label">Happy Customers</div></div>
-    <div class="stat-item reveal"><div class="stat-num">47+</div><div class="stat-label">Cars In Stock</div></div>
+    <div class="stat-item reveal"><div class="stat-num" id="statStock">0</div><div class="stat-label">Cars In Stock</div></div>
     <div class="stat-item reveal"><div class="stat-num">8 Yrs</div><div class="stat-label">In Business</div></div>
-    <div class="stat-item reveal"><div class="stat-num">4.9&#9733;</div><div class="stat-label">Google Rating</div></div>
+    <div class="stat-item reveal"><div class="stat-num">4.9★</div><div class="stat-label">Google Rating</div></div>
   </div>
 </div>
 
@@ -500,9 +840,9 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
   <div class="brands-inner">
     <div class="brands-label">Brands We Deal In</div>
     <div class="brands-track">
-      <span class="brand-item">Mercedes-Benz</span><span class="brand-item">BMW</span><span class="brand-item">Lexus</span>
-      <span class="brand-item">Toyota</span><span class="brand-item">Range Rover</span><span class="brand-item">Porsche</span>
-      <span class="brand-item">Audi</span><span class="brand-item">Bentley</span><span class="brand-item">Ferrari</span><span class="brand-item">Honda</span>
+      <span class="brand-item">Toyota</span><span class="brand-item">Mercedes-Benz</span><span class="brand-item">BMW</span><span class="brand-item">Lexus</span>
+      <span class="brand-item">Honda</span><span class="brand-item">Nissan</span><span class="brand-item">Volkswagen</span><span class="brand-item">Bentley</span>
+      <span class="brand-item">Land Rover</span><span class="brand-item">Porsche</span>
     </div>
   </div>
 </div>
@@ -514,221 +854,16 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
       <div><div class="sec-label">Current Stock</div><h2 class="sec-title">FEATURED <span class="amber">VEHICLES</span></h2></div>
       <p style="color:var(--grey);font-size:14px;line-height:1.8;max-width:340px">All vehicles are 100% verified, duty-cleared, and ready for immediate delivery across Nigeria.</p>
     </div>
-    <div class="filter-bar reveal">
+    <div class="filter-bar reveal" id="filterBar">
       <button class="filter-btn active" onclick="filterCars('all',this)">All Vehicles</button>
       <button class="filter-btn" onclick="filterCars('suv',this)">SUVs</button>
       <button class="filter-btn" onclick="filterCars('sedan',this)">Sedans</button>
       <button class="filter-btn" onclick="filterCars('luxury',this)">Luxury</button>
       <button class="filter-btn" onclick="filterCars('sport',this)">Sports</button>
     </div>
-    <div class="cars-grid" id="carsGrid">
-
-      <div class="car-card featured reveal" data-cat="luxury suv">
-        <div class="car-img-wrap">
-          <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=900&q=80" alt="Mercedes G-Wagon">
-          <span class="car-badge badge-hot">&#128293; Hot</span>
-          <a href="https://wa.me/2348139107838?text=Interested%20in%20G-Wagon%202024" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="car-body">
-          <div class="car-brand">Mercedes-Benz</div>
-          <div class="car-name">G-Wagon AMG 2024</div>
-          <div class="car-specs">
-            <span class="car-spec"><i class="fas fa-calendar"></i> 2024</span>
-            <span class="car-spec"><i class="fas fa-road"></i> 6,200 km</span>
-            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
-            <span class="car-spec"><i class="fas fa-cog"></i> Automatic</span>
-          </div>
-          <div class="car-price">195,000,000 <small>/ Negotiable</small></div>
-          <div class="car-actions">
-            <button class="car-btn-primary" onclick="openModal('Mercedes-Benz','G-Wagon AMG 2024','195,000,000')">
-              <i class="fas fa-paper-plane"></i> I Want This Car
-            </button>
-            <a href="https://wa.me/2348139107838?text=I%20want%20the%20G-Wagon%202024" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="car-card reveal" data-cat="sedan luxury">
-        <div class="car-img-wrap">
-          <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=700&q=80" alt="BMW 7 Series">
-          <span class="car-badge badge-new">New</span>
-          <a href="https://wa.me/2348139107838?text=Interested%20in%20BMW%207%20Series" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="car-body">
-          <div class="car-brand">BMW</div>
-          <div class="car-name">7 Series 760i 2024</div>
-          <div class="car-specs">
-            <span class="car-spec"><i class="fas fa-calendar"></i> 2024</span>
-            <span class="car-spec"><i class="fas fa-road"></i> 3,100 km</span>
-            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
-          </div>
-          <div class="car-price">95,000,000</div>
-          <div class="car-actions">
-            <button class="car-btn-primary" onclick="openModal('BMW','7 Series 760i 2024','95,000,000')"><i class="fas fa-paper-plane"></i> I Want This Car</button>
-            <a href="https://wa.me/2348139107838?text=I%20want%20BMW%207%20Series%202024" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="car-card reveal" data-cat="suv luxury">
-        <div class="car-img-wrap">
-          <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=700&q=80" alt="Range Rover">
-          <span class="car-badge badge-deal">Best Deal</span>
-          <a href="https://wa.me/2348139107838?text=Interested%20in%20Range%20Rover%20Sport" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="car-body">
-          <div class="car-brand">Land Rover</div>
-          <div class="car-name">Range Rover Sport 2023</div>
-          <div class="car-specs">
-            <span class="car-spec"><i class="fas fa-calendar"></i> 2023</span>
-            <span class="car-spec"><i class="fas fa-road"></i> 18,000 km</span>
-            <span class="car-spec"><i class="fas fa-gas-pump"></i> Diesel</span>
-          </div>
-          <div class="car-price">88,500,000</div>
-          <div class="car-actions">
-            <button class="car-btn-primary" onclick="openModal('Land Rover','Range Rover Sport 2023','88,500,000')"><i class="fas fa-paper-plane"></i> I Want This Car</button>
-            <a href="https://wa.me/2348139107838?text=I%20want%20Range%20Rover%20Sport%202023" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="car-card reveal" data-cat="suv">
-        <div class="car-img-wrap">
-          <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=700&q=80" alt="Lexus LX">
-          <span class="car-badge badge-new">New</span>
-          <a href="https://wa.me/2348139107838?text=Interested%20in%20Lexus%20LX%20600" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="car-body">
-          <div class="car-brand">Lexus</div>
-          <div class="car-name">LX 600 F-Sport 2024</div>
-          <div class="car-specs">
-            <span class="car-spec"><i class="fas fa-calendar"></i> 2024</span>
-            <span class="car-spec"><i class="fas fa-road"></i> 5,400 km</span>
-            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
-          </div>
-          <div class="car-price">120,000,000</div>
-          <div class="car-actions">
-            <button class="car-btn-primary" onclick="openModal('Lexus','LX 600 F-Sport 2024','120,000,000')"><i class="fas fa-paper-plane"></i> I Want This Car</button>
-            <a href="https://wa.me/2348139107838?text=I%20want%20Lexus%20LX600" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="car-card reveal" data-cat="sport luxury">
-        <div class="car-img-wrap">
-          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=700&q=80" alt="Porsche">
-          <span class="car-badge badge-hot">&#128293; Hot</span>
-          <a href="https://wa.me/2348139107838?text=Interested%20in%20Porsche%20Cayenne" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="car-body">
-          <div class="car-brand">Porsche</div>
-          <div class="car-name">Cayenne Turbo 2023</div>
-          <div class="car-specs">
-            <span class="car-spec"><i class="fas fa-calendar"></i> 2023</span>
-            <span class="car-spec"><i class="fas fa-road"></i> 9,800 km</span>
-            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
-          </div>
-          <div class="car-price">145,000,000</div>
-          <div class="car-actions">
-            <button class="car-btn-primary" onclick="openModal('Porsche','Cayenne Turbo 2023','145,000,000')"><i class="fas fa-paper-plane"></i> I Want This Car</button>
-            <a href="https://wa.me/2348139107838?text=I%20want%20Porsche%20Cayenne%20Turbo%202023" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="car-card reveal" data-cat="sedan">
-        <div class="car-img-wrap">
-          <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=700&q=80" alt="Toyota Camry">
-          <span class="car-badge badge-deal">Great Value</span>
-          <a href="https://wa.me/2348139107838?text=Interested%20in%20Toyota%20Camry%20XSE" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="car-body">
-          <div class="car-brand">Toyota</div>
-          <div class="car-name">Camry XSE V6 2024</div>
-          <div class="car-specs">
-            <span class="car-spec"><i class="fas fa-calendar"></i> 2024</span>
-            <span class="car-spec"><i class="fas fa-road"></i> 2,300 km</span>
-            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
-          </div>
-          <div class="car-price">32,000,000</div>
-          <div class="car-actions">
-            <button class="car-btn-primary" onclick="openModal('Toyota','Camry XSE V6 2024','32,000,000')"><i class="fas fa-paper-plane"></i> I Want This Car</button>
-            <a href="https://wa.me/2348139107838?text=I%20want%20Toyota%20Camry%20XSE%202024" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="car-card reveal" data-cat="suv">
-        <div class="car-img-wrap">
-          <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=700&q=80" alt="Toyota Highlander">
-          <span class="car-badge badge-new">New</span>
-          <a href="https://wa.me/2348139107838?text=Interested%20in%20Toyota%20Highlander%20Platinum" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="car-body">
-          <div class="car-brand">Toyota</div>
-          <div class="car-name">Highlander Platinum 2024</div>
-          <div class="car-specs">
-            <span class="car-spec"><i class="fas fa-calendar"></i> 2024</span>
-            <span class="car-spec"><i class="fas fa-road"></i> 1,800 km</span>
-            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
-          </div>
-          <div class="car-price">48,500,000</div>
-          <div class="car-actions">
-            <button class="car-btn-primary" onclick="openModal('Toyota','Highlander Platinum 2024','48,500,000')"><i class="fas fa-paper-plane"></i> I Want This Car</button>
-            <a href="https://wa.me/2348139107838?text=I%20want%20Toyota%20Highlander%20Platinum%202024" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="car-card reveal" data-cat="sedan luxury">
-        <div class="car-img-wrap">
-          <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=700&q=80" alt="Mercedes E-Class">
-          <span class="car-badge badge-deal">Best Deal</span>
-          <a href="https://wa.me/2348139107838?text=Interested%20in%20Mercedes%20E-Class%202023" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="car-body">
-          <div class="car-brand">Mercedes-Benz</div>
-          <div class="car-name">E-Class E350 2023</div>
-          <div class="car-specs">
-            <span class="car-spec"><i class="fas fa-calendar"></i> 2023</span>
-            <span class="car-spec"><i class="fas fa-road"></i> 14,200 km</span>
-            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
-          </div>
-          <div class="car-price">62,000,000</div>
-          <div class="car-actions">
-            <button class="car-btn-primary" onclick="openModal('Mercedes-Benz','E-Class E350 2023','62,000,000')"><i class="fas fa-paper-plane"></i> I Want This Car</button>
-            <a href="https://wa.me/2348139107838?text=I%20want%20Mercedes%20E-Class%20E350%202023" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="car-card reveal" data-cat="sport">
-        <div class="car-img-wrap">
-          <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=700&q=80" alt="BMW M5">
-          <span class="car-badge badge-hot">&#128293; Rare</span>
-          <a href="https://wa.me/2348139107838?text=Interested%20in%20BMW%20M5%20Competition" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="car-body">
-          <div class="car-brand">BMW</div>
-          <div class="car-name">M5 Competition 2023</div>
-          <div class="car-specs">
-            <span class="car-spec"><i class="fas fa-calendar"></i> 2023</span>
-            <span class="car-spec"><i class="fas fa-road"></i> 7,600 km</span>
-            <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
-          </div>
-          <div class="car-price">110,000,000</div>
-          <div class="car-actions">
-            <button class="car-btn-primary" onclick="openModal('BMW','M5 Competition 2023','110,000,000')"><i class="fas fa-paper-plane"></i> I Want This Car</button>
-            <a href="https://wa.me/2348139107838?text=I%20want%20BMW%20M5%20Competition%202023" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <div class="cars-grid" id="carsGrid"></div>
     <div style="text-align:center;margin-top:3rem" class="reveal">
-      <a href="https://wa.me/2348139107838?text=Hello%20AutoPrime%2C%20I%20want%20to%20see%20your%20full%20inventory!" target="_blank" class="btn-amber" style="display:inline-flex">
-        <i class="fab fa-whatsapp"></i> View Full Inventory on WhatsApp
-      </a>
+      <a href="https://wa.me/2348139107838?text=Hello%20AutoPrime%2C%20I%20want%20to%20see%20your%20full%20inventory!" target="_blank" class="btn-amber" style="display:inline-flex"><i class="fab fa-whatsapp"></i> View Full Inventory on WhatsApp</a>
     </div>
   </div>
 </section>
@@ -742,10 +877,10 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
         <h2 class="sec-title" style="margin-bottom:1.5rem">WHY LAGOS <span class="amber">CHOOSES</span> US</h2>
         <p>AutoPrime Motors has been Lagos' most trusted premium car dealer for over 8 years. We don't just sell cars - we deliver confidence, quality, and exceptional service from start to finish.</p>
         <div class="whyus-features">
-          <div class="feat-item"><div class="feat-icon">&#128737;</div><h4>100% Verified</h4><p>Full inspection &amp; history check on every vehicle before listing.</p></div>
-          <div class="feat-item"><div class="feat-icon">&#128176;</div><h4>Best Price</h4><p>We guarantee to beat any verified competitor price in Lagos.</p></div>
-          <div class="feat-item"><div class="feat-icon">&#128666;</div><h4>Fast Delivery</h4><p>Nationwide delivery within 3-5 working days, anywhere in Nigeria.</p></div>
-          <div class="feat-item"><div class="feat-icon">&#129309;</div><h4>Finance Plans</h4><p>Flexible bank finance and installment payment plans available.</p></div>
+          <div class="feat-item"><div class="feat-icon">🛡️</div><h4>100% Verified</h4><p>Full inspection &amp; history check on every vehicle before listing.</p></div>
+          <div class="feat-item"><div class="feat-icon">💰</div><h4>Best Price</h4><p>We guarantee to beat any verified competitor price in Lagos.</p></div>
+          <div class="feat-item"><div class="feat-icon">🚚</div><h4>Fast Delivery</h4><p>Nationwide delivery within 3-5 working days, anywhere in Nigeria.</p></div>
+          <div class="feat-item"><div class="feat-icon">🤝</div><h4>Finance Plans</h4><p>Flexible bank finance and installment payment plans available.</p></div>
         </div>
         <a href="#contact" class="btn-amber" style="display:inline-flex;margin-top:2rem"><i class="fas fa-arrow-right"></i> Talk to Our Team</a>
       </div>
@@ -753,7 +888,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
         <div class="metric-box"><div class="metric-num">2K+</div><div class="metric-lbl">Cars Sold</div></div>
         <div class="metric-box"><div class="metric-num">8 Yrs</div><div class="metric-lbl">In Business</div></div>
         <div class="metric-box"><div class="metric-num">100%</div><div class="metric-lbl">Verified Stock</div></div>
-        <div class="metric-box"><div class="metric-num">4.9&#9733;</div><div class="metric-lbl">Customer Rating</div></div>
+        <div class="metric-box"><div class="metric-num">4.9★</div><div class="metric-lbl">Customer Rating</div></div>
       </div>
     </div>
   </div>
@@ -762,26 +897,11 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
 <!-- TESTIMONIALS -->
 <section id="testimonials" class="testi-section">
   <div class="testi-inner">
-    <div class="testi-header reveal">
-      <div class="sec-label">Client Reviews</div>
-      <h2 class="sec-title">WHAT OUR <span class="amber">CLIENTS</span> SAY</h2>
-    </div>
+    <div class="testi-header reveal"><div class="sec-label">Client Reviews</div><h2 class="sec-title">WHAT OUR <span class="amber">CLIENTS</span> SAY</h2></div>
     <div class="testi-grid">
-      <div class="testi-card reveal">
-        <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-        <div class="testi-text">Got my dream G-Wagon delivered in less than 5 days. The documentation was seamless and the car was immaculate. AutoPrime is simply the best in Lagos!</div>
-        <div class="testi-author"><div class="testi-ava">C</div><div><div class="testi-name">Chief Adebayo O.</div><div class="testi-loc">Ikeja, Lagos</div></div></div>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-        <div class="testi-text">I was skeptical buying a Lexus LX600 online but AutoPrime walked me through everything. The car arrived spotless. I have already referred 4 friends!</div>
-        <div class="testi-author"><div class="testi-ava">F</div><div><div class="testi-name">Folake A.</div><div class="testi-loc">Victoria Island, Lagos</div></div></div>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-        <div class="testi-text">Best price in all of Lagos. They beat three other dealers by 2M on my BMW 5 Series. Fast process, professional team, and excellent after-sales support.</div>
-        <div class="testi-author"><div class="testi-ava">E</div><div><div class="testi-name">Emeka N.</div><div class="testi-loc">Lekki, Lagos</div></div></div>
-      </div>
+      <div class="testi-card reveal"><div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><div class="testi-text">Got my dream G-Wagon delivered in less than 5 days. The documentation was seamless and the car was immaculate. AutoPrime is simply the best in Lagos!</div><div class="testi-author"><div class="testi-ava">C</div><div><div class="testi-name">Chief Adebayo O.</div><div class="testi-loc">Ikeja, Lagos</div></div></div></div>
+      <div class="testi-card reveal"><div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><div class="testi-text">I was skeptical buying a Lexus LX600 online but AutoPrime walked me through everything. The car arrived spotless. I have already referred 4 friends!</div><div class="testi-author"><div class="testi-ava">F</div><div><div class="testi-name">Folake A.</div><div class="testi-loc">Victoria Island, Lagos</div></div></div></div>
+      <div class="testi-card reveal"><div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><div class="testi-text">Best price in all of Lagos. They beat three other dealers by 2M on my BMW 5 Series. Fast process, professional team, and excellent after-sales support.</div><div class="testi-author"><div class="testi-ava">E</div><div><div class="testi-name">Emeka N.</div><div class="testi-loc">Lekki, Lagos</div></div></div></div>
     </div>
   </div>
 </section>
@@ -794,11 +914,11 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
       <h2 class="sec-title" style="margin-bottom:1.5rem">LET'S FIND YOUR <span class="amber">PERFECT</span> CAR</h2>
       <p>Tell us what you want and we'll find it. Our team responds within minutes on WhatsApp or fill the form for a detailed quote.</p>
       <div class="contact-items">
-        <a href="tel:+2348139107838" class="contact-item"><div class="c-icon"><i class="fas fa-phone"></i></div><div><div class="c-label">Call Us</div><div class="c-val">0803 943 2707</div></div></a>
-        <a href="tel:+2348039432707" class="contact-item"><div class="c-icon"><i class="fas fa-phone"></i></div><div><div class="c-label">Alternate Line</div><div class="c-val">0813 910 7383</div></div></a>
-        <a href="olawoyints@gmail.com" class="contact-item"><div class="c-icon"><i class="fas fa-envelope"></i></div><div><div class="c-label">Email</div><div class="c-val">sales@autoprimemotors.ng or olawoyints@gmail.com</div></div></a>
+        <a href="tel:+2348039432707" class="contact-item"><div class="c-icon"><i class="fas fa-phone"></i></div><div><div class="c-label">Call Us</div><div class="c-val">0803 943 2707</div></div></a>
+        <a href="tel:+2348139107838" class="contact-item"><div class="c-icon"><i class="fas fa-phone"></i></div><div><div class="c-label">Alternate Line</div><div class="c-val">0813 910 7838</div></div></a>
+        <a href="mailto:sales@autoprimemotors.ng" class="contact-item"><div class="c-icon"><i class="fas fa-envelope"></i></div><div><div class="c-label">Email</div><div class="c-val">sales@autoprimemotors.ng</div></div></a>
         <div class="contact-item"><div class="c-icon"><i class="fas fa-map-marker-alt"></i></div><div><div class="c-label">Showroom</div><div class="c-val">Lekki Phase 1 &amp; Ikeja, Lagos</div></div></div>
-        <div class="contact-item"><div class="c-icon"><i class="fas fa-clock"></i></div><div><div class="c-label">Hours</div><div class="c-val">Mon-Sat: 8am-7pm - Sun: 10am-4pm</div></div></div>
+        <div class="contact-item"><div class="c-icon"><i class="fas fa-clock"></i></div><div><div class="c-label">Hours</div><div class="c-val">Mon-Sat: 8am-7pm · Sun: 10am-4pm</div></div></div>
       </div>
       <a href="https://wa.me/2348139107838?text=Hello%20AutoPrime%20Motors%2C%20I%27d%20like%20to%20enquire%20about%20a%20car." target="_blank" rel="noopener" class="wa-main"><i class="fab fa-whatsapp"></i> Chat with Us on WhatsApp</a>
     </div>
@@ -809,12 +929,12 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
           <div class="f-group"><label class="f-label">Full Name *</label><input type="text" id="fName" class="f-input" placeholder="Your name"><div class="f-err" id="errName">Required</div></div>
           <div class="f-group"><label class="f-label">Phone Number *</label><input type="tel" id="fPhone" class="f-input" placeholder="0803 943 2707"><div class="f-err" id="errPhone">Valid phone required</div></div>
         </div>
-        <div class="f-group"><label class="f-label">Preferred Brand</label><select id="fBrand" class="f-input"><option value="">Select a brand...</option><option>Mercedes-Benz</option><option>BMW</option><option>Lexus</option><option>Toyota</option><option>Range Rover</option><option>Porsche</option><option>Audi</option><option>Bentley</option><option>Other / Flexible</option></select></div>
+        <div class="f-group"><label class="f-label">Preferred Brand</label><select id="fBrand" class="f-input"><option value="">Select a brand...</option><option>Mercedes-Benz</option><option>BMW</option><option>Lexus</option><option>Toyota</option><option>Honda</option><option>Nissan</option><option>Volkswagen</option><option>Range Rover</option><option>Porsche</option><option>Bentley</option><option>Audi</option><option>Other / Flexible</option></select></div>
         <div class="f-row">
           <div class="f-group"><label class="f-label">Budget *</label><select id="fBudget" class="f-input"><option value="">Select budget...</option><option>Under 20M</option><option>20M - 50M</option><option>50M - 100M</option><option>100M - 200M</option><option>Above 200M</option></select><div class="f-err" id="errBudget">Please select a budget</div></div>
           <div class="f-group"><label class="f-label">Vehicle Type</label><select id="fType" class="f-input"><option value="">Select type...</option><option>SUV / Crossover</option><option>Sedan</option><option>Sports Car</option><option>Pickup / Truck</option><option>Van / Minibus</option></select></div>
         </div>
-        <div class="f-group"><label class="f-label">Additional Notes</label><textarea id="fNote" class="f-input" rows="3" placeholder="Any specific requirements? (colour, year, mileage, etc.)"></textarea></div>
+        <div class="f-group"><label class="f-label">Additional Notes</label><textarea id="fNote" class="f-input" rows="3" placeholder="Any specific requirements?"></textarea></div>
         <button type="submit" class="f-submit" id="fSubmit"><span id="fBtnTxt">Send Quote Request</span><i class="fab fa-whatsapp" id="fBtnIco"></i></button>
       </form>
     </div>
@@ -834,13 +954,12 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
         <a href="https://wa.me/2348139107838" target="_blank" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
         <a href="#" class="soc-btn"><i class="fab fa-youtube"></i></a>
       </div>
-    </div
-
+    </div>
     <div class="foot-col"><h4>Quick Links</h4><ul class="foot-links"><li><a href="#inventory">Browse Inventory</a></li><li><a href="#whyus">Why Choose Us</a></li><li><a href="#testimonials">Client Reviews</a></li><li><a href="#contact">Get a Quote</a></li></ul></div>
-    <div class="foot-col"><h4>Brands</h4><ul class="foot-links"><li><a href="#">Mercedes-Benz</a></li><li><a href="#">BMW</a></li><li><a href="#">Lexus</a></li><li><a href="#">Range Rover</a></li><li><a href="#">Porsche</a></li><li><a href="#">Toyota</a></li></ul></div>
-    <div class="foot-col"><h4>Contact</h4><ul class="foot-links"><li><a href="tel:+2348039432707">0803 943 2707</a></li><li><a href="tel:+2348039432707">0813 910 7838</a></li><li><a href="mailto:sales@autoprimemotors.ng or olawoyints@gmail.com">sales@autoprimemotors.ng or olawoyints@gmail.com</a></li><li><a href="#">Lekki Phase 1, Lagos</a></li><li><a href="#">Ikeja, Lagos</a></li></ul></div>
+    <div class="foot-col"><h4>Brands</h4><ul class="foot-links"><li><a href="#">Toyota</a></li><li><a href="#">Mercedes-Benz</a></li><li><a href="#">BMW</a></li><li><a href="#">Lexus</a></li><li><a href="#">Honda</a></li><li><a href="#">Nissan</a></li><li><a href="#">Volkswagen</a></li></ul></div>
+    <div class="foot-col"><h4>Contact</h4><ul class="foot-links"><li><a href="tel:+2348039432707">0803 943 2707</a></li><li><a href="tel:+2348139107838">0813 910 7838</a></li><li><a href="mailto:sales@autoprimemotors.ng">sales@autoprimemotors.ng</a></li><li><a href="#">Lekki Phase 1, Lagos</a></li><li><a href="#">Ikeja, Lagos</a></li></ul></div>
   </div>
-  <div class="foot-bottom"><span>2026 AutoPrime Motors - All Rights Reserved</span><span>Lekki Phase 1 &amp; Ikeja, Lagos, Nigeria</span></div>
+  <div class="foot-bottom"><span>© 2026 AutoPrime Motors · All Rights Reserved</span><span>Lekki Phase 1 &amp; Ikeja, Lagos, Nigeria</span></div>
 </footer>
 
 <a href="https://wa.me/2348139107838?text=Hello%20AutoPrime%20Motors%2C%20I%27m%20interested%20in%20a%20vehicle." target="_blank" rel="noopener" class="wa-float"><i class="fab fa-whatsapp"></i></a>
@@ -848,7 +967,489 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:5rem 5
 <div id="toast"></div>
 
 <script>
-// Cursor
+// ============================================================
+// DATA STORE — default inventory (Nigeria-relevant vehicles)
+// ============================================================
+var defaultInventory = [
+  {id:1,brand:'Mercedes-Benz',model:'G-Wagon AMG 2024',year:2024,category:'luxury suv',fuel:'Petrol',transmission:'Automatic',mileage:6200,colour:'Black',price:195000000,priceNote:'Negotiable',badge:'hot',featured:true,status:'available',img:'https://images.unsplash.com/photo-1563720223185-11003d516935?w=900&q=80',waMsg:'Interested in G-Wagon AMG 2024'},
+  {id:2,brand:'BMW',model:'7 Series 760i 2024',year:2024,category:'sedan luxury',fuel:'Petrol',transmission:'Automatic',mileage:3100,colour:'White',price:95000000,priceNote:'',badge:'new',featured:false,status:'available',img:'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=700&q=80',waMsg:'Interested in BMW 7 Series 760i 2024'},
+  {id:3,brand:'Land Rover',model:'Range Rover Sport 2023',year:2023,category:'suv luxury',fuel:'Diesel',transmission:'Automatic',mileage:18000,colour:'Grey',price:88500000,priceNote:'',badge:'deal',featured:false,status:'available',img:'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=700&q=80',waMsg:'Interested in Range Rover Sport 2023'},
+  {id:4,brand:'Lexus',model:'LX 600 F-Sport 2024',year:2024,category:'suv',fuel:'Petrol',transmission:'Automatic',mileage:5400,colour:'Silver',price:120000000,priceNote:'',badge:'new',featured:false,status:'available',img:'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=700&q=80',waMsg:'Interested in Lexus LX 600 F-Sport 2024'},
+  {id:5,brand:'Porsche',model:'Cayenne Turbo 2023',year:2023,category:'sport luxury',fuel:'Petrol',transmission:'Automatic',mileage:9800,colour:'Red',price:145000000,priceNote:'',badge:'hot',featured:false,status:'available',img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=700&q=80',waMsg:'Interested in Porsche Cayenne Turbo 2023'},
+  {id:6,brand:'Toyota',model:'Camry XSE V6 2024',year:2024,category:'sedan',fuel:'Petrol',transmission:'Automatic',mileage:2300,colour:'Blue',price:32000000,priceNote:'',badge:'deal',featured:false,status:'available',img:'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=700&q=80',waMsg:'Interested in Toyota Camry XSE V6 2024'},
+  {id:7,brand:'Toyota',model:'Highlander Platinum 2024',year:2024,category:'suv',fuel:'Petrol',transmission:'Automatic',mileage:1800,colour:'White',price:48500000,priceNote:'',badge:'new',featured:false,status:'available',img:'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=700&q=80',waMsg:'Interested in Toyota Highlander Platinum 2024'},
+  {id:8,brand:'Mercedes-Benz',model:'E-Class E350 2023',year:2023,category:'sedan luxury',fuel:'Petrol',transmission:'Automatic',mileage:14200,colour:'Black',price:62000000,priceNote:'',badge:'deal',featured:false,status:'available',img:'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=700&q=80',waMsg:'Interested in Mercedes E-Class E350 2023'},
+  {id:9,brand:'BMW',model:'M5 Competition 2023',year:2023,category:'sport',fuel:'Petrol',transmission:'Automatic',mileage:7600,colour:'Black',price:110000000,priceNote:'',badge:'hot',featured:false,status:'available',img:'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=700&q=80',waMsg:'Interested in BMW M5 Competition 2023'},
+  {id:10,brand:'Toyota',model:'Corolla Cross 2024',year:2024,category:'suv sedan',fuel:'Petrol',transmission:'Automatic',mileage:4100,colour:'White',price:22000000,priceNote:'',badge:'new',featured:false,status:'available',img:'https://images.unsplash.com/photo-1617469767054-a1d2dfce2f92?w=700&q=80',waMsg:'Interested in Toyota Corolla Cross 2024'},
+  {id:11,brand:'Honda',model:'CR-V 2023',year:2023,category:'suv',fuel:'Petrol',transmission:'Automatic',mileage:12500,colour:'Silver',price:28000000,priceNote:'Negotiable',badge:'deal',featured:false,status:'available',img:'https://images.unsplash.com/photo-1609620561781-2b8e5e79d7c4?w=700&q=80',waMsg:'Interested in Honda CR-V 2023'},
+  {id:12,brand:'Nissan',model:'Patrol Platinum 2023',year:2023,category:'suv luxury',fuel:'Petrol',transmission:'Automatic',mileage:8900,colour:'White',price:75000000,priceNote:'',badge:'hot',featured:false,status:'available',img:'https://images.unsplash.com/photo-1602148035894-027e4beead2e?w=700&q=80',waMsg:'Interested in Nissan Patrol Platinum 2023'},
+  {id:13,brand:'Volkswagen',model:'Tiguan 2023',year:2023,category:'suv',fuel:'Petrol',transmission:'Automatic',mileage:11000,colour:'Grey',price:24500000,priceNote:'',badge:'deal',featured:false,status:'available',img:'https://images.unsplash.com/photo-1617554765520-52e960a65b1f?w=700&q=80',waMsg:'Interested in Volkswagen Tiguan 2023'},
+  {id:14,brand:'Bentley',model:'Bentayga V8 2022',year:2022,category:'luxury suv',fuel:'Petrol',transmission:'Automatic',mileage:15000,colour:'Black',price:280000000,priceNote:'Negotiable',badge:'hot',featured:false,status:'available',img:'https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=700&q=80',waMsg:'Interested in Bentley Bentayga V8 2022'},
+  {id:15,brand:'Lexus',model:'RX 500h 2024',year:2024,category:'suv luxury',fuel:'Hybrid',transmission:'Automatic',mileage:3200,colour:'White',price:65000000,priceNote:'',badge:'new',featured:false,status:'available',img:'https://images.unsplash.com/photo-1546464677-7ada6fddd880?w=700&q=80',waMsg:'Interested in Lexus RX 500h 2024'}
+];
+
+var inventory = JSON.parse(localStorage.getItem('autoprime_inventory') || 'null') || defaultInventory;
+var activityLog = JSON.parse(localStorage.getItem('autoprime_activity') || '[]');
+var nextId = Math.max(...inventory.map(c=>c.id), 0) + 1;
+var isLoggedIn = false;
+var deleteTargetId = null;
+var editingId = null;
+var activeFilter = 'all';
+
+function saveData(){
+  try{
+    localStorage.setItem('autoprime_inventory', JSON.stringify(inventory));
+    localStorage.setItem('autoprime_activity', JSON.stringify(activityLog));
+  }catch(e){}
+}
+function logActivity(type, text){
+  activityLog.unshift({type, text, time: new Date().toLocaleString('en-NG')});
+  if(activityLog.length > 50) activityLog = activityLog.slice(0, 50);
+  saveData();
+}
+
+// Format price Nigerian style
+function fmtPrice(n){
+  if(n>=1000000000) return '₦'+(n/1000000000).toFixed(1)+'B';
+  if(n>=1000000) return '₦'+(n/1000000).toFixed(1)+'M';
+  return '₦'+Number(n).toLocaleString();
+}
+function fmtPriceRaw(n){ return '₦'+Number(n).toLocaleString(); }
+
+// ============================================================
+// RENDER PUBLIC STOREFRONT
+// ============================================================
+function renderStorefront(){
+  var grid = document.getElementById('carsGrid');
+  var available = inventory.filter(c=>c.status==='available');
+  var filtered = activeFilter==='all' ? available : available.filter(c=>(c.category||'').includes(activeFilter));
+
+  if(filtered.length===0){
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--grey)"><i class="fas fa-car" style="font-size:40px;display:block;margin-bottom:1rem;opacity:.3"></i><p>No vehicles found in this category.</p></div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(function(car){
+    var badgeHTML = '';
+    if(car.badge==='new') badgeHTML='<span class="car-badge badge-new">New</span>';
+    else if(car.badge==='hot') badgeHTML='<span class="car-badge badge-hot">🔥 Hot</span>';
+    else if(car.badge==='deal') badgeHTML='<span class="car-badge badge-deal">Best Deal</span>';
+
+    var waText = encodeURIComponent('I want the '+car.brand+' '+car.model);
+    var waLink = 'https://wa.me/2348139107838?text='+waText;
+    var featuredClass = car.featured ? ' featured' : '';
+    var imgTag = car.img
+      ? '<img src="'+car.img+'" alt="'+car.brand+' '+car.model+'" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=700&q=80\'">'
+      : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--grey);font-size:40px;opacity:.3"><i class="fas fa-car"></i></div>';
+
+    return '<div class="car-card'+featuredClass+' reveal" data-cat="'+car.category+'">'+
+      '<div class="car-img-wrap">'+imgTag+badgeHTML+
+      '<a href="'+waLink+'" target="_blank" class="car-wa-quick"><i class="fab fa-whatsapp"></i></a></div>'+
+      '<div class="car-body">'+
+      '<div class="car-brand">'+car.brand+'</div>'+
+      '<div class="car-name">'+car.model+'</div>'+
+      '<div class="car-specs">'+
+      '<span class="car-spec"><i class="fas fa-calendar"></i> '+car.year+'</span>'+
+      (car.mileage?'<span class="car-spec"><i class="fas fa-road"></i> '+Number(car.mileage).toLocaleString()+' km</span>':'')+
+      (car.fuel?'<span class="car-spec"><i class="fas fa-gas-pump"></i> '+car.fuel+'</span>':'')+
+      (car.transmission?'<span class="car-spec"><i class="fas fa-cog"></i> '+car.transmission+'</span>':'')+
+      '</div>'+
+      '<div class="car-price">'+fmtPriceRaw(car.price)+(car.priceNote?' <small>/ '+car.priceNote+'</small>':'')+'</div>'+
+      '<div class="car-actions">'+
+      '<button class="car-btn-primary" onclick="openModal(\''+car.brand+'\',\''+car.model+'\',\''+fmtPriceRaw(car.price)+'\')"><i class="fas fa-paper-plane"></i> I Want This Car</button>'+
+      '<a href="'+waLink+'" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>'+
+      '</div></div></div>';
+  }).join('');
+
+  // Re-trigger reveal animations
+  document.querySelectorAll('.reveal').forEach(function(el){
+    if(!el.classList.contains('vis')){
+      new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.1}).observe(el);
+    }
+  });
+
+  updateHeroPanel();
+}
+
+function updateHeroPanel(){
+  var available = inventory.filter(c=>c.status==='available');
+  var sold = inventory.filter(c=>c.status==='sold');
+  var minPrice = available.length ? Math.min(...available.map(c=>c.price)) : 0;
+  document.getElementById('heroStockCount').textContent = available.length + '+';
+  document.getElementById('heroSoldCount').textContent = sold.length;
+  document.getElementById('heroStartFrom').textContent = minPrice ? fmtPrice(minPrice) : '—';
+  document.getElementById('statStock').textContent = available.length + '+';
+}
+
+function filterCars(cat, btn){
+  activeFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+  if(btn) btn.classList.add('active');
+  renderStorefront();
+}
+
+// ============================================================
+// ADMIN LOGIN
+// ============================================================
+function openAdminPortal(){
+  if(isLoggedIn){ openAdmin(); return; }
+  document.getElementById('loginOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLogin(){
+  document.getElementById('loginOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function doLogin(){
+  var u = document.getElementById('loginUser').value.trim();
+  var p = document.getElementById('loginPass').value;
+  if(u==='admin' && p==='admin123'){
+    isLoggedIn = true;
+    closeLogin();
+    openAdmin();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+  }
+}
+document.getElementById('loginPass').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+
+// ============================================================
+// ADMIN PANEL
+// ============================================================
+function openAdmin(){
+  document.getElementById('adminOverlay').classList.add('open');
+  document.getElementById('adminPanel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  refreshAdminUI();
+}
+function closeAdmin(){
+  document.getElementById('adminOverlay').classList.remove('open');
+  document.getElementById('adminPanel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e){
+  if(e.target === document.getElementById('adminOverlay')) closeAdmin();
+}
+function switchAdminTab(tab, btn){
+  document.querySelectorAll('.admin-tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.admin-tab-content').forEach(function(c){c.classList.remove('active');});
+  if(btn) btn.classList.add('active');
+  else {
+    document.querySelectorAll('.admin-tab').forEach(function(t){
+      if(t.getAttribute('onclick') && t.getAttribute('onclick').includes("'"+tab+"'")) t.classList.add('active');
+    });
+  }
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(tab==='inventory') renderAdminTable();
+  if(tab==='overview') renderOverview();
+  if(tab==='activity') renderActivity();
+}
+
+function refreshAdminUI(){
+  renderOverview();
+  renderAdminTable();
+  renderActivity();
+  updateBrandFilter();
+  document.getElementById('invCount').textContent = inventory.length;
+}
+
+function renderOverview(){
+  var avail = inventory.filter(c=>c.status==='available');
+  var sold = inventory.filter(c=>c.status==='sold');
+  var totalVal = avail.reduce(function(s,c){return s+Number(c.price);},0);
+  document.getElementById('kpi-total').textContent = inventory.length;
+  document.getElementById('kpi-available').textContent = avail.length;
+  document.getElementById('kpi-sold').textContent = sold.length;
+  document.getElementById('kpi-value').textContent = fmtPrice(totalVal);
+
+  // Brand chart
+  var brands = {};
+  inventory.forEach(function(c){ brands[c.brand] = (brands[c.brand]||0)+1; });
+  var sorted = Object.entries(brands).sort(function(a,b){return b[1]-a[1];}).slice(0,8);
+  var max = sorted.length ? sorted[0][1] : 1;
+  document.getElementById('brandChart').innerHTML = sorted.map(function(b){
+    var pct = Math.round((b[1]/max)*100);
+    return '<div style="display:flex;align-items:center;gap:12px;font-size:13px">'+
+      '<span style="width:120px;color:var(--white);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+b[0]+'</span>'+
+      '<div style="flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden">'+
+        '<div style="height:100%;width:'+pct+'%;background:var(--amber);border-radius:4px;transition:width .6s ease"></div>'+
+      '</div>'+
+      '<span style="color:var(--amber);font-family:\'Barlow Condensed\',sans-serif;font-size:16px;font-weight:700;width:24px;text-align:right">'+b[1]+'</span>'+
+    '</div>';
+  }).join('');
+}
+
+function updateBrandFilter(){
+  var brands = [...new Set(inventory.map(c=>c.brand))].sort();
+  var sel = document.getElementById('adminBrandFilter');
+  var cur = sel.value;
+  sel.innerHTML = '<option value="">All Brands</option>' +
+    brands.map(function(b){ return '<option value="'+b+'"'+(b===cur?' selected':'')+'>'+b+'</option>'; }).join('');
+}
+
+function renderAdminTable(){
+  var q = (document.getElementById('adminSearch').value||'').toLowerCase();
+  var brandF = document.getElementById('adminBrandFilter').value;
+  var statusF = document.getElementById('adminStatusFilter').value;
+
+  var filtered = inventory.filter(function(c){
+    var matchQ = !q || (c.brand+' '+c.model+' '+c.year).toLowerCase().includes(q);
+    var matchB = !brandF || c.brand===brandF;
+    var matchS = !statusF || c.status===statusF;
+    return matchQ && matchB && matchS;
+  });
+
+  document.getElementById('invCount').textContent = inventory.length;
+
+  var tbody = document.getElementById('adminTableBody');
+  if(filtered.length===0){
+    tbody.innerHTML='<tr><td colspan="8"><div class="no-results"><i class="fas fa-search"></i><p>No vehicles found. Try adjusting your search.</p></div></td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(function(car){
+    var badgeCls = {new:'new',hot:'hot',deal:'deal',none:''}[car.badge]||'';
+    var badgeLabel = {new:'New',hot:'🔥 Hot',deal:'Best Deal',none:'—'}[car.badge]||'—';
+    var imgEl = car.img
+      ? '<img src="'+car.img+'" alt="" class="tbl-img" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">'
+      : '';
+    return '<tr>'+
+      '<td>'+imgEl+'<div class="tbl-img-placeholder" style="display:'+(car.img?'none':'flex')+'"><i class="fas fa-car"></i></div></td>'+
+      '<td><div class="tbl-name">'+car.model+'</div><div class="tbl-brand">'+car.brand+'</div></td>'+
+      '<td style="color:var(--grey)">'+car.year+'</td>'+
+      '<td style="color:var(--grey);font-size:12px;text-transform:capitalize">'+car.category+'</td>'+
+      '<td><div class="tbl-price">'+fmtPrice(car.price)+'</div></td>'+
+      '<td>'+(badgeCls?'<span class="tbl-badge '+badgeCls+'">'+badgeLabel+'</span>':'<span style="color:var(--grey);font-size:12px">—</span>')+'</td>'+
+      '<td><span class="tbl-badge '+(car.status==='available'?'available':'sold')+'">'+car.status.charAt(0).toUpperCase()+car.status.slice(1)+'</span></td>'+
+      '<td><div class="tbl-actions">'+
+        '<button class="tbl-btn edit" onclick="openCarForm('+car.id+')" title="Edit"><i class="fas fa-edit"></i></button>'+
+        '<button class="tbl-btn toggle" onclick="toggleStatus('+car.id+')" title="'+(car.status==='available'?'Mark Sold':'Mark Available')+'"><i class="fas fa-'+(car.status==='available'?'check-circle':'undo')+'"></i></button>'+
+        '<button class="tbl-btn del" onclick="openConfirm('+car.id+')" title="Delete"><i class="fas fa-trash"></i></button>'+
+      '</div></td>'+
+    '</tr>';
+  }).join('');
+}
+
+function renderActivity(){
+  var list = document.getElementById('activityList');
+  if(activityLog.length===0){
+    list.innerHTML='<div class="no-results"><i class="fas fa-history"></i><p>No activity yet. Add, edit, or delete vehicles to see logs here.</p></div>';
+    return;
+  }
+  list.innerHTML = activityLog.map(function(a){
+    var icons = {add:'plus',edit:'edit',del:'trash',sold:'check-circle'};
+    return '<div class="activity-item">'+
+      '<div class="act-icon '+a.type+'"><i class="fas fa-'+icons[a.type]+'"></i></div>'+
+      '<div class="act-body"><div class="act-text">'+a.text+'</div><div class="act-time">'+a.time+'</div></div>'+
+    '</div>';
+  }).join('');
+}
+
+function clearActivity(){
+  activityLog = [];
+  saveData();
+  renderActivity();
+  toast('Activity log cleared');
+}
+
+// ============================================================
+// STATUS TOGGLE (SOLD / AVAILABLE)
+// ============================================================
+function toggleStatus(id){
+  var car = inventory.find(function(c){return c.id===id;});
+  if(!car) return;
+  car.status = car.status==='available' ? 'sold' : 'available';
+  saveData();
+  logActivity('sold', 'Marked <strong>'+car.brand+' '+car.model+'</strong> as <strong>'+car.status+'</strong>');
+  renderAdminTable();
+  renderOverview();
+  renderStorefront();
+  toast(car.model+' marked as '+car.status);
+}
+
+// ============================================================
+// DELETE
+// ============================================================
+function openConfirm(id){
+  deleteTargetId = id;
+  var car = inventory.find(function(c){return c.id===id;});
+  document.getElementById('confirmCarName').textContent = car ? car.brand+' '+car.model : 'this vehicle';
+  document.getElementById('confirmOverlay').classList.add('open');
+}
+function closeConfirm(){
+  document.getElementById('confirmOverlay').classList.remove('open');
+  deleteTargetId = null;
+}
+function confirmDelete(){
+  if(!deleteTargetId) return;
+  var car = inventory.find(function(c){return c.id===deleteTargetId;});
+  inventory = inventory.filter(function(c){return c.id!==deleteTargetId;});
+  saveData();
+  logActivity('del','Deleted <strong>'+(car?car.brand+' '+car.model:'vehicle')+'</strong>');
+  closeConfirm();
+  renderAdminTable();
+  renderOverview();
+  renderStorefront();
+  updateBrandFilter();
+  toast('Vehicle deleted successfully');
+}
+
+// ============================================================
+// CAR FORM (ADD / EDIT)
+// ============================================================
+// Populate year dropdown
+(function(){
+  var sel = document.getElementById('cfYear');
+  for(var y=new Date().getFullYear()+1; y>=2010; y--){
+    var o = document.createElement('option');
+    o.value=y; o.textContent=y;
+    sel.appendChild(o);
+  }
+})();
+
+// Badge radio highlight
+document.querySelectorAll('.badge-radio').forEach(function(lbl){
+  lbl.querySelector('input').addEventListener('change', function(){
+    document.querySelectorAll('.badge-radio').forEach(function(l){ l.className='badge-radio'; });
+    var v = this.value;
+    var cls = {new:'selected-new',hot:'selected-hot',deal:'selected-deal',none:''}[v]||'';
+    if(cls) lbl.className='badge-radio '+cls;
+  });
+});
+
+function openCarForm(id){
+  editingId = id || null;
+  document.getElementById('cfTitle').textContent = id ? 'Edit Vehicle' : 'Add New Vehicle';
+  document.getElementById('cfSaveTxt').textContent = id ? 'Update Vehicle' : 'Save Vehicle';
+  document.getElementById('cfId').value = id || '';
+
+  // Reset
+  ['cfBrand','cfModel','cfYear','cfCategory','cfFuel','cfTransmission','cfColour','cfPrice','cfPriceNote','cfImgUrl','cfWaMsg'].forEach(function(i){
+    var el = document.getElementById(i);
+    if(el) el.value='';
+  });
+  document.getElementById('cfMileage').value='';
+  document.getElementById('cfFeatured').checked=false;
+  document.querySelectorAll('.badge-radio').forEach(function(l){ l.className='badge-radio'; });
+  document.querySelector('.badge-radio:last-child input').checked=true;
+  setImgPreview('');
+
+  if(id){
+    var car = inventory.find(function(c){return c.id===id;});
+    if(car){
+      document.getElementById('cfBrand').value = car.brand;
+      document.getElementById('cfModel').value = car.model;
+      document.getElementById('cfYear').value = car.year;
+      document.getElementById('cfCategory').value = car.category.split(' ')[0];
+      document.getElementById('cfFuel').value = car.fuel||'Petrol';
+      document.getElementById('cfTransmission').value = car.transmission||'Automatic';
+      document.getElementById('cfColour').value = car.colour||'';
+      document.getElementById('cfMileage').value = car.mileage||'';
+      document.getElementById('cfPrice').value = car.price||'';
+      document.getElementById('cfPriceNote').value = car.priceNote||'';
+      document.getElementById('cfImgUrl').value = car.img||'';
+      document.getElementById('cfWaMsg').value = car.waMsg||'';
+      document.getElementById('cfFeatured').checked = !!car.featured;
+      if(car.img) setImgPreview(car.img);
+
+      // Set badge
+      document.querySelectorAll('.badge-radio').forEach(function(l){
+        l.className='badge-radio';
+        if(l.querySelector('input').value === (car.badge||'none')){
+          l.querySelector('input').checked=true;
+          var cls={new:'selected-new',hot:'selected-hot',deal:'selected-deal',none:''}[car.badge]||'';
+          if(cls) l.className='badge-radio '+cls;
+        }
+      });
+    }
+  }
+
+  document.getElementById('carFormOverlay').classList.add('open');
+}
+
+function closeCarForm(){
+  document.getElementById('carFormOverlay').classList.remove('open');
+  editingId = null;
+}
+
+function previewImg(){
+  setImgPreview(document.getElementById('cfImgUrl').value.trim());
+}
+
+function setImgPreview(url){
+  var preview = document.getElementById('cfImgPreview');
+  if(url){
+    preview.innerHTML = '<img src="'+url+'" alt="Preview" style="width:100%;height:100%;object-fit:cover" onerror="document.getElementById(\'cfImgPreview\').innerHTML=\'<div class=\\\"img-placeholder\\\"><i class=\\\"fas fa-exclamation-circle\\\"></i><p>Image failed to load</p></div>\'">';
+  } else {
+    preview.innerHTML = '<div class="img-placeholder"><i class="fas fa-camera"></i><p>No image set</p></div>';
+  }
+}
+
+function saveCar(){
+  var brand = document.getElementById('cfBrand').value;
+  var model = document.getElementById('cfModel').value.trim();
+  var year = document.getElementById('cfYear').value;
+  var price = document.getElementById('cfPrice').value;
+  var cat = document.getElementById('cfCategory').value;
+
+  if(!brand||!model||!year||!price||!cat){
+    toast('Please fill in all required fields (Brand, Model, Year, Category, Price)');
+    return;
+  }
+
+  var badgeEl = document.querySelector('.badge-radio input:checked');
+  var badge = badgeEl ? badgeEl.value : 'none';
+  var catVal = cat;
+  // add luxury to luxury-type categories
+  var luxBrands = ['Mercedes-Benz','BMW','Porsche','Bentley','Ferrari','Lamborghini','Audi','Lexus','Land Rover','Infiniti','Acura'];
+  if(luxBrands.includes(brand) && !catVal.includes('luxury')) catVal += ' luxury';
+
+  var carObj = {
+    brand: brand,
+    model: model,
+    year: parseInt(year),
+    category: catVal,
+    fuel: document.getElementById('cfFuel').value || 'Petrol',
+    transmission: document.getElementById('cfTransmission').value || 'Automatic',
+    colour: document.getElementById('cfColour').value.trim(),
+    mileage: parseInt(document.getElementById('cfMileage').value)||0,
+    price: parseInt(price),
+    priceNote: document.getElementById('cfPriceNote').value.trim(),
+    badge: badge==='none' ? '' : badge,
+    featured: document.getElementById('cfFeatured').checked,
+    status: 'available',
+    img: document.getElementById('cfImgUrl').value.trim(),
+    waMsg: document.getElementById('cfWaMsg').value.trim() || 'Interested in '+brand+' '+model
+  };
+
+  if(editingId){
+    var idx = inventory.findIndex(function(c){return c.id===editingId;});
+    if(idx>-1){
+      carObj.id = editingId;
+      carObj.status = inventory[idx].status; // preserve status
+      inventory[idx] = carObj;
+      logActivity('edit','Updated <strong>'+brand+' '+model+'</strong>');
+      toast('Vehicle updated successfully!');
+    }
+  } else {
+    carObj.id = nextId++;
+    inventory.unshift(carObj);
+    logActivity('add','Added new vehicle: <strong>'+brand+' '+model+'</strong> — '+fmtPrice(parseInt(price)));
+    toast('Vehicle added to inventory!');
+  }
+
+  saveData();
+  closeCarForm();
+  renderAdminTable();
+  renderOverview();
+  renderStorefront();
+  updateBrandFilter();
+  document.getElementById('invCount').textContent = inventory.length;
+}
+
+// ============================================================
+// CURSOR
+// ============================================================
 var cur=document.getElementById('cur'),ring=document.getElementById('curRing'),mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
 (function a(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
@@ -856,30 +1457,31 @@ document.querySelectorAll('a,button').forEach(function(el){
   el.addEventListener('mouseenter',function(){cur.style.width='18px';cur.style.height='18px';});
   el.addEventListener('mouseleave',function(){cur.style.width='10px';cur.style.height='10px';});
 });
-// Nav scroll
+
+// ============================================================
+// NAV / SCROLL
+// ============================================================
 window.addEventListener('scroll',function(){
   document.getElementById('navbar').classList.toggle('scrolled',scrollY>60);
   document.getElementById('btt').classList.toggle('vis',scrollY>400);
 });
-// Mobile menu
 document.getElementById('ham').onclick=function(){document.getElementById('mobMenu').classList.add('open');};
 document.getElementById('mobClose').onclick=function(){document.getElementById('mobMenu').classList.remove('open');};
 function closeMob(){document.getElementById('mobMenu').classList.remove('open');}
-// Reveal
+
+// Reveal on scroll
 document.querySelectorAll('.reveal').forEach(function(el){
   new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.1}).observe(el);
 });
-// Filter
-function filterCars(cat,btn){
-  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  document.querySelectorAll('.car-card').forEach(function(card){
-    card.style.display=(cat==='all'||(card.dataset.cat||'').includes(cat))?'flex':'none';
-  });
-}
-// Toast
+
+// ============================================================
+// TOAST
+// ============================================================
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3500);}
-// Quote form
+
+// ============================================================
+// QUOTE FORM
+// ============================================================
 document.getElementById('quoteForm').addEventListener('submit',function(e){
   e.preventDefault();
   var name=document.getElementById('fName'),phone=document.getElementById('fPhone'),budget=document.getElementById('fBudget');
@@ -907,10 +1509,11 @@ document.getElementById('quoteForm').addEventListener('submit',function(e){
   },700);
 });
 
-// ===== INQUIRY MODAL =====
+// ============================================================
+// INQUIRY MODAL
+// ============================================================
 var mCar={brand:'',name:'',price:'',intent:'',delivery:'',trade:''};
 var curStep=1;
-
 function openModal(brand,name,price){
   mCar={brand:brand,name:name,price:price,intent:'',delivery:'',trade:''};
   document.getElementById('mhBrand').textContent=brand;
@@ -927,13 +1530,9 @@ function openModal(brand,name,price){
   document.getElementById('buyModal').classList.add('open');
   document.body.style.overflow='hidden';
 }
-function closeModal(){
-  document.getElementById('buyModal').classList.remove('open');
-  document.body.style.overflow='';
-}
+function closeModal(){document.getElementById('buyModal').classList.remove('open');document.body.style.overflow='';}
 document.getElementById('buyModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
-
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModal();closeAdmin();}});
 function showStep(n){
   curStep=n;
   document.querySelectorAll('.m-step').forEach(function(s){s.classList.remove('active');});
@@ -988,19 +1587,16 @@ function submitBuyInquiry(){
   var msg=encodeURIComponent(
     'CAR PURCHASE INQUIRY - AutoPrime Motors\n\n'+
     'Vehicle: '+mCar.brand+' '+mCar.name+'\n'+
-    'Listed Price: N'+mCar.price+'\n\n'+
-    'BUYER INFO\n'+
-    'Name: '+name+'\nPhone: '+phone+'\nWhatsApp: '+wa+'\nLocation: '+loc+'\n\n'+
-    'INTENT\n'+
-    'Intent: '+mCar.intent+'\nTimeline: '+timeline+'\nDelivery: '+(mCar.delivery||'Not specified')+'\n\n'+
-    'PREFERENCES\n'+
-    'Colour: '+colour+'\nPayment: '+payment+'\nTrade-In: '+(mCar.trade||'Not specified')+'\nTrade-In Details: '+tradeDetail+'\n\n'+
+    'Listed Price: '+mCar.price+'\n\n'+
+    'BUYER INFO\nName: '+name+'\nPhone: '+phone+'\nWhatsApp: '+wa+'\nLocation: '+loc+'\n\n'+
+    'INTENT\nIntent: '+mCar.intent+'\nTimeline: '+timeline+'\nDelivery: '+(mCar.delivery||'Not specified')+'\n\n'+
+    'PREFERENCES\nColour: '+colour+'\nPayment: '+payment+'\nTrade-In: '+(mCar.trade||'Not specified')+'\nTrade-In Details: '+tradeDetail+'\n\n'+
     'NOTES\n'+notes+'\n\nPlease respond ASAP!'
   );
   setTimeout(function(){
     document.getElementById('sumBox').innerHTML=
       '<div class="sum-row"><span class="sum-key">Vehicle</span><span class="sum-val">'+mCar.name+'</span></div>'+
-      '<div class="sum-row"><span class="sum-key">Price</span><span class="sum-val">N'+mCar.price+'</span></div>'+
+      '<div class="sum-row"><span class="sum-key">Price</span><span class="sum-val">'+mCar.price+'</span></div>'+
       '<div class="sum-row"><span class="sum-key">Your Name</span><span class="sum-val">'+name+'</span></div>'+
       '<div class="sum-row"><span class="sum-key">Intent</span><span class="sum-val">'+mCar.intent+'</span></div>'+
       '<div class="sum-row"><span class="sum-key">Payment</span><span class="sum-val">'+payment+'</span></div>';
@@ -1013,6 +1609,11 @@ function submitBuyInquiry(){
     toast('Inquiry sent! We will contact you shortly.');
   },800);
 }
+
+// ============================================================
+// INIT
+// ============================================================
+renderStorefront();
 </script>
 </body>
 </html>
