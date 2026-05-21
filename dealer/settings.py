@@ -139,3 +139,15 @@ if not DEBUG:
         # Disable caching for HTML
         SESSION_COOKIE_AGE = 0
         CSRF_COOKIE_MAX_AGE = 0
+
+        # ====================== CACHE CONTROL FOR DEPLOYMENT ======================
+        if not DEBUG:
+            # Disable caching for HTML pages (very important for Render)
+            WHITENOISE_MAX_AGE = 0
+
+            # Force Whitenoise to use unique file names when content changes
+            STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+            # Extra security & cache headers
+            SECURE_BROWSER_XSS_FILTER = True
+            SECURE_CONTENT_TYPE_NOSNIFF = True

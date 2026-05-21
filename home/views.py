@@ -15,6 +15,7 @@ def home(request):
         'total_stock': Car.objects.filter(status='available').count(),
         'sold_count': Car.objects.filter(status='sold').count(),
         'min_price': Car.objects.filter(status='available').order_by('price').first(),
+        'version': '2025.05.21.07'
     }
     return render(request, 'home/home.html', context)
 
