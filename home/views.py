@@ -17,7 +17,7 @@ def home(request):
         'min_price': Car.objects.filter(status='available').order_by('price').first(),
         'version': '2025.05.21.07'
     }
-    return render(request, 'home/home.html', context)
+    return render(request, 'home/index.html', context)
 
 
 # ---- CRUD API (protected — staff only) ----
