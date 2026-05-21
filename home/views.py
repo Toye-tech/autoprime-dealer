@@ -3,11 +3,13 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST, require_http_methods
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.cache import never_cache
 import json
 from .models import Car
-from django.views.decorators.cache import never_cache
 
-# ---- PUBLIC STOREFRONT ----
+
+# ====================== PUBLIC STOREFRONT ======================
+@never_cache   # ← This prevents caching of the homepage
 def home(request):
     cars = Car.objects.filter(status='available')
     context = {
@@ -15,12 +17,12 @@ def home(request):
         'total_stock': Car.objects.filter(status='available').count(),
         'sold_count': Car.objects.filter(status='sold').count(),
         'min_price': Car.objects.filter(status='available').order_by('price').first(),
-        'version': '2025.05.21.07'
+        'version': '2025.05.21.09'          # ← Increase this every time you update design
     }
     return render(request, 'home/index.html', context)
 
 
-# ---- CRUD API (protected — staff only) ----
+# ====================== ADMIN API ENDPOINTS ======================
 
 @staff_member_required
 def api_cars_list(request):
