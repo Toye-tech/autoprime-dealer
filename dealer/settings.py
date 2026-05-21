@@ -132,3 +132,10 @@ if not DEBUG:
 if not DEBUG:
     # This helps Whitenoise create unique file names when content changes
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # ==================== CACHE & STATIC ====================
+    if not DEBUG:
+        STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+        # Disable caching for HTML
+        SESSION_COOKIE_AGE = 0
+        CSRF_COOKIE_MAX_AGE = 0

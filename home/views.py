@@ -5,6 +5,7 @@ from django.views.decorators.http import require_POST, require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .models import Car
+from django.views.decorators.cache import never_cache
 
 # ---- PUBLIC STOREFRONT ----
 def home(request):
