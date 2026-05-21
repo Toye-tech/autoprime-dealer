@@ -128,3 +128,7 @@ if not DEBUG:
 
     # Use the proxy's HTTPS header (needed on Render, Railway, Heroku etc.)
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# Add this near the bottom
+if not DEBUG:
+    # This helps Whitenoise create unique file names when content changes
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
